@@ -1,14 +1,19 @@
 <?php include 'common/header.php'; ?>
 <?php
-$id = $_REQUEST["id"];
+if (!empty($_REQUEST["id"])) {
+    $id = $_REQUEST["id"];
+} else {
+    echo "<script>alert('没有id');</script>";
+    exit();
+}
 $pt = db_fetch_array("SELECT * FROM wdzx_navigation_links where id=$id;", $conn);
+empty($_REQUEST["name"]) ? $name = "" : $name = $_REQUEST["name"];
+empty($_REQUEST["url"]) ? $url = "" : $url = $_REQUEST["url"];
+empty($_REQUEST["initial"]) ? $initial = "" : $initial = $_REQUEST["initial"];
+empty($_REQUEST["level"]) ? $level = "" : $level = $_REQUEST["level"];
+empty($_REQUEST["province"]) ? $province = "" : $province = $_REQUEST["province"];
+empty($_REQUEST["is_hot"]) ? $is_hot = "" : $is_hot = $_REQUEST["is_hot"];
 
-$name = $_REQUEST["name"];
-$url = $_REQUEST["url"];
-$initial = $_REQUEST["initial"];
-$level = $_REQUEST["level"];
-$province = $_REQUEST["province"];
-$is_hot = $_REQUEST["is_hot"];
 if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != '') {
     mysql_query("update wdzx_navigation_links set name='$name',url='$url',initial='$initial',level=$level,province='$province',is_hot=$is_hot where id=$id", $conn);
     echo "<script>alert('修改成功');window.location.href='/admin_list.php';</script>";

@@ -1,10 +1,12 @@
 <?php include 'common/header.php'; ?>
 <?php
-$name = $_REQUEST["name"];
-$url = $_REQUEST["url"];
-$initial = $_REQUEST["initial"];
-$level = $_REQUEST["level"];
-$province = $_REQUEST["province"];
+empty($_REQUEST["name"]) ? $name = "" : $name = $_REQUEST["name"];
+empty($_REQUEST["url"]) ? $url = "" : $url = $_REQUEST["url"];
+empty($_REQUEST["initial"]) ? $initial = "" : $initial = $_REQUEST["initial"];
+empty($_REQUEST["level"]) ? $level = "" : $level = $_REQUEST["level"];
+empty($_REQUEST["province"]) ? $province = "" : $province = $_REQUEST["province"];
+
+mysql_query("select ");
 if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != '') {
     mysql_query("insert into wdzx_navigation_links(name,url,initial,level,province) value('$name','$url','$initial',$level,'$province');", $conn);
     echo "<script>alert('添加成功');window.location.href='/admin_list.php';</script>";
@@ -15,7 +17,6 @@ if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != 
     <div class="left subtable">
         <form action="admin_add.php" method="post">
             <table width="510" border="0" cellspacing="0" cellpadding="0">
-
                 <tr>
                     <td width="109" class="tbtitle"><span>*</span>网站名称：</td>
                     <td width="401"><input name="name" id="name" type="text" class="subinput" /></td>

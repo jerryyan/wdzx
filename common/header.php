@@ -7,7 +7,7 @@
 <meta name="keywords" content="网贷平台排名 p2p平台排名 p2p导航 网贷平台哪个好 网贷平台导航 网贷平台评级" />
 <meta name="description" content="网贷平台排名 p2p平台排名 p2p导航 网贷平台哪个好 网贷平台导航 网贷平台评级" />
 <link rel="stylesheet" type="text/css" href="css/main.css"/>
-<script src="/js/jquery-2.1.1.js"></script>
+<script src="js/jquery-2.1.1.js"></script>
 <script type="text/javascript">
             // 设置为主页
             function SetHome(obj, vrl) {

@@ -1,7 +1,7 @@
 <?php
 include 'common/header.php';
-$province = $_REQUEST["province"];
-$initial = $_REQUEST["initial"];
+empty($_REQUEST["province"]) ? $province = "" : $province = $_REQUEST["province"];
+empty($_REQUEST["initial"]) ? $initial = "" : $initial = $_REQUEST["initial"];
 
 $szm = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
 $sql = "select * from wdzx_navigation_links  where 1=1 ";
