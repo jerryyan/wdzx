@@ -1,0 +1,61 @@
+<div class="hot-url-index">
+                                            <span class="hot"></span> 
+<span style="float: left; display: block; margin-top: 4px;
+                                                margin-left: 2px;"><a href="javascript:void(0)">
+                                                    <img src="images/icon_admin_add.gif" style="border: none; cursor: pointer" onclick='OnClickImage(787)' /></a></span>
+
+                                            <a class="url" target="_blank"  href="http://www.huifub.com/ ">
+                                               汇富宝
+                                            </a>
+                                            <div class="tips-star">
+                                                <img src="images/arrow-left.png" />
+                                            </div>
+                                        </div>
+
+                        
+                    
+            <div class="hot-url-index">
+                                            <span class="hot"></span> 
+<span style="float: left; display: block; margin-top: 4px;
+                                                margin-left: 2px;"><a href="javascript:void(0)">
+                                                    <img src="images/icon_admin_add.gif" style="border: none; cursor: pointer" onclick='OnClickImage(900)' /></a></span>
+
+                                            <a class="url" target="_blank"  href="https://www.huitouzi.com/ ">
+                                               汇投资
+                                            </a>
+                                            <div class="tips-star">
+                                                <img src="images/arrow-left.png" />
+                                            </div>
+                                        </div>
+
+                        
+                    
+            <div class="hot-url-index">
+                                            <span class="hot"></span> 
+<span style="float: left; display: block; margin-top: 4px;
+                                                margin-left: 2px;"><a href="javascript:void(0)">
+                                                    <img src="images/icon_admin_add.gif" style="border: none; cursor: pointer" onclick='OnClickImage(395)' /></a></span>
+
+                                            <a class="url" target="_blank"  href="http://www.xindacaifu.com/index.html ">
+                                               信达财富
+                                            </a>
+                                            <div class="tips-star">
+                                                <img src="images/arrow-left.png" />
+                                            </div>
+                                        </div>
+
+                        
+                    
+            <div class="hot-url-index">
+                                            <span class="hot"></span> 
+<span style="float: left; display: block; margin-top: 4px;
+                                                margin-left: 2px;"><a href="javascript:void(0)">
+                                                    <img src="images/icon_admin_add.gif" style="border: none; cursor: pointer" onclick='OnClickImage(858)' /></a></span>
+
+                                            <a class="url" target="_blank"  href="http://www.everp2p.com/ ">
+                                               云投网
+                                            </a>
+                                            <div class="tips-star">
+                                                <img src="images/arrow-left.png" />
+                                            </div>
+                                        </div>
