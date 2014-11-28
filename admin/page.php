@@ -2,346 +2,188 @@
 
 class Page {
 
-    private $pagecount; //总页数
-    private $pagesize = 10; //每页显示的记录数
-    private $pagenow = 1; //当前页
-    private $pageindexcount; //总索引数
-    private $pageindex = 1; //当前索引页
-    private $pageindexsize = 10; //每页显示索引数
-    private $navigation_bar; //导航条
-    private $data; //数据
-    private $sqlhelper; //数据库连接
-    private $pagenowid = "pagenow"; //当前页url参数名
-    private $pageindexid = "pageindex"; //当前索引页url参数名
-    private $data_sql; //查询数据的SQL语句
-    private $start = "@start"; //SQL语句limit占位符
-    private $end = "@end"; //SQL语句limit占位符
-    private $url; //连接的地址
-    private $pageup; //上翻页连接
-    private $nextpage; //下翻页连接
-    private $fristpage; //第一页
-    private $endpage; //最后一页
-    private $pageup_txt = "上翻页"; //上翻页显示文本
-    private $nextpage_txt = "下翻页"; //下翻页显示文本
-    private $firstpage_txt = "第一页"; //第一页显示文本
-    private $endpage_txt = "最后一页"; //最后一页显示文本
+    private $each_disNums; //每页显示的条目数   
+    private $nums; //总条目数   
+    private $current_page; //当前被选中的页   
+    private $sub_pages; //每次显示的页数   
+    private $pageNums; //总页数   
+    private $page_array = array(); //用来构造分页的数组   
+    private $subPage_link; //每个分页的链接   
 
-    /**
-     * @return the $pageup_txt
+
+    /*
+      __construct是SubPages的构造函数，用来在创建类的时候自动运行.
+      @$each_disNums   每页显示的条目数
+      @nums     总条目数
+      @current_num     当前被选中的页
+      @sub_pages       每次显示的页数
+      @subPage_link    每个分页的链接
+      @subPage_type    显示分页的类型
+
+      当@subPage_type=1的时候为普通分页模式
+      example：   共4523条记录,每页显示10条,当前第1/453页 [首页] [上页] [下页] [尾页]
+      当@subPage_type=2的时候为经典分页样式
+      example：   当前第1/453页 [首页] [上页] 1 2 3 4 5 6 7 8 9 10 [下页] [尾页]
      */
 
-    public function getPageup_txt() {
-        return $this->pageup_txt;
-    }
-
-    /**
-     * @return the $nextpage_txt
-     */
-    public function getNextpage_txt() {
-        return $this->nextpage_txt;
-    }
-
-    /**
-     * @return the $firstpage_txt
-     */
-    public function getFirstpage_txt() {
-        return $this->firstpage_txt;
-    }
-
-    /**
-     * @return the $endpage_txt
-     */
-    public function getEndpage_txt() {
-        return $this->endpage_txt;
-    }
-
-    /**
-     * @param field_type $pageup_txt
-     */
-    public function setPageup_txt($pageup_txt) {
-        $this->pageup_txt = $pageup_txt;
-    }
-
-    /**
-     * @param field_type $nextpage_txt
-     */
-    public function setNextpage_txt($nextpage_txt) {
-        $this->nextpage_txt = $nextpage_txt;
-    }
-
-    /**
-     * @param field_type $firstpage_txt
-     */
-    public function setFirstpage_txt($firstpage_txt) {
-        $this->firstpage_txt = $firstpage_txt;
-    }
-
-    /**
-     * @param field_type $endpage_txt
-     */
-    public function setEndpage_txt($endpage_txt) {
-        $this->endpage_txt = $endpage_txt;
-    }
-
-    /**
-     * @return the $pageup
-     */
-    public function getPageup() {
-        return $this->pageup;
-    }
-
-    /**
-     * @return the $nextpage
-     */
-    public function getNextpage() {
-        return $this->nextpage;
-    }
-
-    /**
-     * @return the $fristpage
-     */
-    public function getFristpage() {
-        return $this->fristpage;
-    }
-
-    /**
-     * @return the $endpage
-     */
-    public function getEndpage() {
-        return $this->endpage;
-    }
-
-    /**
-     * @return the $url
-     */
-    public function getUrl() {
-        return $this->url;
-    }
-
-    /**
-     * @param field_type $url
-     */
-    public function setUrl($url) {
-        $this->url = $url;
-    }
-
-    /**
-     * @return the $data_sql
-     */
-    public function getData_sql() {
-        return $this->data_sql;
-    }
-
-    /**
-     * @param field_type $data_sql
-     */
-    public function setData_sql($data_sql) {
-        $this->data_sql = $data_sql;
-    }
-
-    /**
-     * @return the $start
-     */
-    public function getStart() {
-        return $this->start;
-    }
-
-    /**
-     * @return the $end
-     */
-    public function getEnd() {
-        return $this->end;
-    }
-
-    /**
-     * @return the $pagenowid
-     */
-    public function getPagenowid() {
-        return $this->pagenowid;
-    }
-
-    /**
-     * @return the $pageindexid
-     */
-    public function getPageindexid() {
-        return $this->pageindexid;
-    }
-
-    /**
-     * @param string $pagenowid
-     */
-    public function setPagenowid($pagenowid) {
-        $this->pagenowid = $pagenowid;
-    }
-
-    /**
-     * @param string $pageindexid
-     */
-    public function setPageindexid($pageindexid) {
-        $this->pageindexid = $pageindexid;
-    }
-
-    /**
-     * @return the $pagecount
-     */
-    public function getPagecount() {
-        return $this->pagecount;
-    }
-
-    /**
-     * @return the $pagesize
-     */
-    public function getPagesize() {
-        return $this->pagesize;
-    }
-
-    /**
-     * @return the $pagenow
-     */
-    public function getPagenow() {
-        return $this->pagenow;
-    }
-
-    /**
-     * @return the $pageindexcount
-     */
-    public function getPageindexcount() {
-        return $this->pageindexcount;
-    }
-
-    /**
-     * @return the $pageindex
-     */
-    public function getPageindex() {
-        return $this->pageindex;
-    }
-
-    /**
-     * @return the $pageindexsize
-     */
-    public function getPageindexsize() {
-        return $this->pageindexsize;
-    }
-
-    /**
-     * @return the $navigation_bar
-     */
-    public function getNavigation_bar() {
-        return $this->navigation_bar;
-    }
-
-    /**
-     * @return the $data
-     */
-    public function getData() {
-        return $this->data;
-    }
-
-    /**
-     * @param field_type $pagecount
-     */
-    public function setPagecount($pagecount) {
-        $this->pagecount = $pagecount;
-    }
-
-    /**
-     * @param field_type $pagesize
-     */
-    public function setPagesize($pagesize) {
-        $this->pagesize = $pagesize;
-    }
-
-    /**
-     * @param field_type $pagenow
-     */
-    public function setPagenow($pagenow) {
-        $this->pagenow = $pagenow;
-    }
-
-    /**
-     * @param field_type $pageindexcount
-     */
-    public function setPageindexcount($pageindexcount) {
-        $this->pageindexcount = $pageindexcount;
-    }
-
-    /**
-     * @param field_type $pageindex
-     */
-    public function setPageindex($pageindex) {
-        $this->pageindex = $pageindex;
-    }
-
-    /**
-     * @param field_type $pageindexsize
-     */
-    public function setPageindexsize($pageindexsize) {
-        $this->pageindexsize = $pageindexsize;
-    }
-
-    /**
-     * @param field_type $navigation_bar
-     */
-    public function setNavigation_bar($navigation_bar) {
-        $this->navigation_bar = $navigation_bar;
-    }
-
-    /**
-     * @param field_type $data
-     */
-    public function setData($data) {
-        $this->data = $data;
-    }
-
-    public function __construct($sql, $url, $pagesize, $pageindexsize) {
-        $this->pagesize = $pagesize;
-        $this->pageindexsize = $pageindexsize;
-        $this->sqlhelper = new SqlHelper();
-        $this->url = $url;
-        $pagecount = $this->sqlhelper->Execute_DQL_Array($sql);
-        //总页数
-        $this->pagecount = ceil($pagecount[0][0] / $this->pagesize);
-        //总索引数
-        $this->pageindexcount = ceil($this->pagecount / $this->pageindexsize);
-    }
-
-    public function fenye($data_sql) {
-        $this->data_sql = $data_sql;
-        //当前显示的页数
-        if (!empty($_GET[$this->pagenowid])) {
-            $this->pagenow = $_GET[$this->pagenowid];
+    public  function fenye($each_disNums, $nums, $current_page, $sub_pages, $subPage_link, $subPage_type) {
+        $this->each_disNums = intval($each_disNums);
+        $this->nums = intval($nums);
+        if (!$current_page) {
+            $this->current_page = 1;
+        } else {
+            $this->current_page = intval($current_page);
         }
-        //当前显示索引
-        if (!empty($_GET[$this->pageindexid])) {
-            $this->pageindex = $_GET[$this->pageindexid];
+        $this->sub_pages = intval($sub_pages);
+        $this->pageNums = ceil($nums / $each_disNums);
+        $this->subPage_link = $subPage_link;
+        $this->show_SubPages($subPage_type);
+        //echo $this->pageNums."--".$this->sub_pages;   
+    }
+
+    /*
+      __destruct析构函数，当类不在使用的时候调用，该函数用来释放资源。
+     */
+
+    public function __destruct() {
+        unset($each_disNums);
+        unset($nums);
+        unset($current_page);
+        unset($sub_pages);
+        unset($pageNums);
+        unset($page_array);
+        unset($subPage_link);
+        unset($subPage_type);
+    }
+
+    /*
+      show_SubPages函数用在构造函数里面。而且用来判断显示什么样子的分页
+     */
+
+    public  function show_SubPages($subPage_type) {
+        if ($subPage_type == 1) {
+            $this->subPageCss1();
+        } elseif ($subPage_type == 2) {
+            $this->subPageCss2();
+        }
+    }
+
+    /*
+      用来给建立分页的数组初始化的函数。
+     */
+
+    public function initArray() {
+        for ($i = 0; $i < $this->sub_pages; $i++) {
+            $this->page_array[$i] = $i;
+        }
+        return $this->page_array;
+    }
+
+    /*
+      construct_num_Page该函数使用来构造显示的条目
+      即使：[1][2][3][4][5][6][7][8][9][10]
+     */
+
+    public function construct_num_Page() {
+        if ($this->pageNums < $this->sub_pages) {
+            $current_array = array();
+            for ($i = 0; $i < $this->pageNums; $i++) {
+                $current_array[$i] = $i + 1;
+            }
+        } else {
+            $current_array = $this->initArray();
+            if ($this->current_page <= 3) {
+                for ($i = 0; $i < count($current_array); $i++) {
+                    $current_array[$i] = $i + 1;
+                }
+            } elseif ($this->current_page <= $this->pageNums && $this->current_page > $this->pageNums - $this->sub_pages + 1) {
+                for ($i = 0; $i < count($current_array); $i++) {
+                    $current_array[$i] = ($this->pageNums) - ($this->sub_pages) + 1 + $i;
+                }
+            } else {
+                for ($i = 0; $i < count($current_array); $i++) {
+                    $current_array[$i] = $this->current_page - 2 + $i;
+                }
+            }
         }
 
-        //生成查询语句
-        $this->data_sql = str_replace($this->start, ($this->pagenow - 1) * $this->pagesize, $this->data_sql);
-        $this->data_sql = str_replace($this->end, $this->pagesize, $this->data_sql);
+        return $current_array;
+    }
 
-        //获得查询数据
-        $this->data = $this->sqlhelper->Execute_DQL($this->data_sql);
+    /*
+      构造普通模式的分页
+      共4523条记录,每页显示10条,当前第1/453页 [首页] [上页] [下页] [尾页]
+     */
 
-        $index = $this->pageindexcount <= 1 ? 2 : $this->pageindex + $this->pageindexsize;
+    public function subPageCss1() {
+        $subPageCss1Str = "";
+        $subPageCss1Str.="共" . $this->nums . "条记录，";
+        $subPageCss1Str.="每页显示" . $this->each_disNums . "条，";
+        $subPageCss1Str.="当前第" . $this->current_page . "/" . $this->pageNums . "页 ";
+        if ($this->current_page > 1) {
+            $firstPageUrl = $this->subPage_link . "1";
+            $prewPageUrl = $this->subPage_link . ($this->current_page - 1);
+            $subPageCss1Str.="[<a href='$firstPageUrl'>首页</a>] ";
+            $subPageCss1Str.="[<a href='$prewPageUrl'>上一页</a>] ";
+        } else {
+            $subPageCss1Str.="[首页] ";
+            $subPageCss1Str.="[上一页] ";
+        }
 
-        //生成导航条
-        for ($j = $this->pageindex; $j < $index; $j++) {
-            $this->navigation_bar.="<a href='{$this->url}?{$this->pagenowid}=$j&{$this->pageindexid}={$this->pageindex}'>$j</a>";
+        if ($this->current_page < $this->pageNums) {
+            $lastPageUrl = $this->subPage_link . $this->pageNums;
+            $nextPageUrl = $this->subPage_link . ($this->current_page + 1);
+            $subPageCss1Str.=" [<a href='$nextPageUrl'>下一页</a>] ";
+            $subPageCss1Str.="[<a href='$lastPageUrl'>尾页</a>] ";
+        } else {
+            $subPageCss1Str.="[下一页] ";
+            $subPageCss1Str.="[尾页] ";
         }
-        //生成上翻页与下翻页
-        $pagetemp = $this->pageindex;
-        if ($this->pageindex > 1) {
-            $this->pageindex = $this->pageindex - $this->pageindexsize;
+
+        echo $subPageCss1Str;
+    }
+
+    /*
+      构造经典模式的分页
+      当前第1/453页 [首页] [上页] 1 2 3 4 5 6 7 8 9 10 [下页] [尾页]
+     */
+
+    public function subPageCss2() {
+        $subPageCss2Str = "";
+        $subPageCss2Str.="当前第" . $this->current_page . "/" . $this->pageNums . "页 ";
+
+
+        if ($this->current_page > 1) {
+            $firstPageUrl = $this->subPage_link . "1";
+            $prewPageUrl = $this->subPage_link . ($this->current_page - 1);
+            $subPageCss2Str.="[<a href='$firstPageUrl'>首页</a>] ";
+            $subPageCss2Str.="[<a href='$prewPageUrl'>上一页</a>] ";
+        } else {
+            $subPageCss2Str.="[首页] ";
+            $subPageCss2Str.="[上一页] ";
         }
-        if ($pagetemp < $this->pageindexcount) {
-            $pagetemp = $pagetemp + $this->pageindexsize;
+
+        $a = $this->construct_num_Page();
+        for ($i = 0; $i < count($a); $i++) {
+            $s = $a[$i];
+            if ($s == $this->current_page) {
+                $subPageCss2Str.="[<span style='color:red;font-weight:bold;'>" . $s . "</span>]";
+            } else {
+                $url = $this->subPage_link . $s;
+                $subPageCss2Str.="[<a href='$url'>" . $s . "</a>]";
+            }
         }
-        $this->pageup = "<a href='{$this->url}?$this->pageindexid={$this->pageindex}'>{$this->pageup_txt}</a>";
-        $this->nextpage = "<a href='{$this->url}?$this->pageindexid={$pagetemp}'>{$this->nextpage_txt}</a>";
-        //生成第一页与最后一页
-        $this->fristpage = "<a href='{$this->url}?{$this->pagenowid}=1'>{$this->firstpage_txt}</a>";
-        $this->endpage = "<a href='{$this->url}?{$this->pagenowid}={$this->pagecount}'>{$this->endpage_txt}</a>";
+
+        if ($this->current_page < $this->pageNums) {
+            $lastPageUrl = $this->subPage_link . $this->pageNums;
+            $nextPageUrl = $this->subPage_link . ($this->current_page + 1);
+            $subPageCss2Str.=" [<a href='$nextPageUrl'>下一页</a>] ";
+            $subPageCss2Str.="[<a href='$lastPageUrl'>尾页</a>] ";
+        } else {
+            $subPageCss2Str.="[下一页] ";
+            $subPageCss2Str.="[尾页] ";
+        }
+        echo $subPageCss2Str;
     }
 
 }
