@@ -13,12 +13,12 @@ $dh_list = db_fetch_arrays($sql, $conn);
 ?>
 <div class="tt2">
     <div class="column">
-<?php $province_list = db_fetch_arrays("SELECT province,COUNT(*) AS total FROM wdzx_navigation_links GROUP BY province ORDER BY total DESC;", $conn); ?>
+        <?php $province_list = db_fetch_arrays("SELECT province,COUNT(*) AS total FROM wdzx_navigation_links GROUP BY province ORDER BY total DESC;", $conn); ?>
         <div class="left cllist"><span>地区分类：</span>&nbsp;
             <a href="?initial=<?php echo $initial; ?>" <?php if ($province == "") { ?>class="current"<?php } ?>>全部</a>
             <?php foreach ($province_list as $value) { ?>
                 <a href="?province=<?php echo $value["province"]; ?>&initial=<?php echo $initial; ?>" <?php if ($province == $value["province"]) { ?>class="current"<?php } ?>><?php echo $value["province"]; ?>(<?php echo $value["total"]; ?>)</a>
-<?php } ?>
+            <?php } ?>
         </div>
         <div class="clear"></div>
 
@@ -28,7 +28,7 @@ $dh_list = db_fetch_arrays($sql, $conn);
 
             <?php foreach ($szm as $s) { ?>
                 <a href="?initial=<?php echo $s; ?>&province=<?php echo $province; ?>" <?php if ($initial == $s) { ?>class="current"<?php } ?>><?php echo $s; ?></a>
-<?php } ?>
+            <?php } ?>
             <div class="cler"></div>
 
             <div class="clear"></div>
@@ -49,31 +49,36 @@ $dh_list = db_fetch_arrays($sql, $conn);
             <div class="clline"></div>
             <ul class="conlisttext">
                 <?php foreach ($dh_list as $dh) { ?>
-                    <li><a href="/admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a></li>
-<?php } ?>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <i class="kc3" id="<?php echo $dh['id']; ?>"></i></li>
+
+                <?php } ?>
             </ul>
             <div class="clear"></div>
         </div>
 
         <div class="left conlist" id="level_1" style="display:none;">
             <ul class="conlisttext">
-                <?php foreach ($dh_list as $dh) {
+                <?php
+                foreach ($dh_list as $dh) {
                     if ($dh["level"] != 1) {
                         continue;
-                    } ?>
-                    <li><a href="/admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a></li>
-<?php } ?>
+                    }
+                    ?>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <i class="kc3" id="<?php echo $dh['id']; ?>"></i></li>
+                <?php } ?>
             </ul>
             <div class="clear"></div>
         </div>
 
         <div class="left conlist" id="level_2" style="display:none;">
             <ul class="conlisttext">
-<?php foreach ($dh_list as $dh) {
-    if ($dh["level"] != 2) {
-        continue;
-    } ?>
-                    <li><a href="/admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a></li>
+                <?php
+                foreach ($dh_list as $dh) {
+                    if ($dh["level"] != 2) {
+                        continue;
+                    }
+                    ?>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <i class="kc3" id="<?php echo $dh['id']; ?>"></i></li>
                 <?php } ?>
             </ul>
             <div class="clear"></div>
@@ -81,36 +86,42 @@ $dh_list = db_fetch_arrays($sql, $conn);
 
         <div class="left conlist" id="level_3" style="display:none;">
             <ul class="conlisttext">
-<?php foreach ($dh_list as $dh) {
-    if ($dh["level"] != 3) {
-        continue;
-    } ?>
-                    <li><a href="/admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a></li>
-<?php } ?>
+                <?php
+                foreach ($dh_list as $dh) {
+                    if ($dh["level"] != 3) {
+                        continue;
+                    }
+                    ?>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <i class="kc3" id="<?php echo $dh['id']; ?>"></i></li>
+                <?php } ?>
             </ul>
             <div class="clear"></div>
         </div>
 
         <div class="left conlist" id="level_4" style="display:none;">
             <ul class="conlisttext">
-                <?php foreach ($dh_list as $dh) {
+                <?php
+                foreach ($dh_list as $dh) {
                     if ($dh["level"] != 4) {
                         continue;
-                    } ?>
-                    <li><a href="/admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a></li>
-<?php } ?>
+                    }
+                    ?>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <i class="kc3" id="<?php echo $dh['id']; ?>"></i></li>
+                <?php } ?>
             </ul>
             <div class="clear"></div>
         </div>
 
         <div class="left conlist" id="level_5" style="display:none;">
             <ul class="conlisttext">
-<?php foreach ($dh_list as $dh) {
-    if ($dh["level"] != 5) {
-        continue;
-    } ?>
-                    <li><a href="/admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a></li>
-<?php } ?>
+                <?php
+                foreach ($dh_list as $dh) {
+                    if ($dh["level"] != 5) {
+                        continue;
+                    }
+                    ?>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <i class="kc3" id="<?php echo $dh['id']; ?>"></i></li>
+                <?php } ?>
             </ul>
             <div class="clear"></div>
         </div>
@@ -130,5 +141,31 @@ $dh_list = db_fetch_arrays($sql, $conn);
         $("#type_" + id).attr("class", "current");
     }
 //-->
+
+    $(".conlisttext").children('li').mouseover(function () {
+        $(this).children('.kc3').css("display", "inline-block");
+    });
+    $(".conlisttext").children('li').mouseout(function () {
+        $(this).children('.kc3').css("display", "none");
+    });
+    $(".kc3").click(function () {      
+        if (window.confirm("确认删除吗",'height=350,width=400,toolbar=no,location=no,status=no,menubar=no')) {
+            var id = $(this).attr("id");
+            $.ajax({
+                type: "post",
+                url: 'admin_del.php',
+                dataType: "json",
+                data: {id: id},
+                success: function (msg) {
+                    if (msg === 1) {
+                        location.reload();
+                    } else {
+                        alert("删除失败，请联系管理员！");
+                    }
+                }
+            });
+        }
+
+    });
 </script>
 <?php include 'common/footer.php'; ?>
