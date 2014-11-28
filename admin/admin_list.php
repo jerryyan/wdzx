@@ -4,16 +4,32 @@ empty($_REQUEST["province"]) ? $province = "" : $province = $_REQUEST["province"
 empty($_REQUEST["initial"]) ? $initial = "" : $initial = $_REQUEST["initial"];
 
 $szm = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+
+
 $sql = "select * from wdzx_navigation_links  where 1=1 ";
 $sql1 = "select count(*) as total from wdzx_navigation_links  where 1=1";
 if ($province != '') {
     $sql .= " and province='$province'";
+    $sql1 .= " and province='$province'";
 }
 if ($initial != '') {
     $sql .= " and initial='$initial'";
+    $sql1 .= " and initial='$initial'";
+}
+$total = db_fetch_array($sql1, $conn);
+include 'page.php';
+$page_size = 40; //每页数量
+$p = isset($_GET['p']) && !empty($_GET['p']) ? $_GET['p'] : 1;
+$url = "http://" . $_SERVER ['HTTP_HOST'] . $_SERVER['PHP_SELF'] . "?p=";
+$offset = $p - 1;
+if ($total['total'] > $page_size) {
+    $sql.=" limit $offset,$page_size";
 }
 $dh_list = db_fetch_arrays($sql, $conn);
+$subPages = new Page();
 ?>
+
+
 
 <div id="dialog-confirm" title="删除该记录？" style="display: none;">
     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>您确认删除该记录?</p>
@@ -61,6 +77,11 @@ $dh_list = db_fetch_arrays($sql, $conn);
 
                 <?php } ?>
             </ul>
+       <?php
+        if ($total['total'] > $page_size) {
+            $subPages->fenye($page_size, $total['total'], $p, 5, $url, 2);
+        }
+        ?>
             <div class="clear"></div>
         </div>
 
@@ -132,8 +153,8 @@ $dh_list = db_fetch_arrays($sql, $conn);
                 <?php } ?>
             </ul>
             <div class="clear"></div>
-        </div>
-
+        </div>       
+ 
         <div class="clear"></div>
     </div>
 </div>
