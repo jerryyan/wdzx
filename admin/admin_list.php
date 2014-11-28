@@ -1,16 +1,24 @@
 <?php
-include 'common/header.php';
+include '../common/admin_header.php';
 empty($_REQUEST["province"]) ? $province = "" : $province = $_REQUEST["province"];
 empty($_REQUEST["initial"]) ? $initial = "" : $initial = $_REQUEST["initial"];
 
 $szm = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
 $sql = "select * from wdzx_navigation_links  where 1=1 ";
-if ($province != '')
+$sql1 = "select count(*) as total from wdzx_navigation_links  where 1=1";
+if ($province != '') {
     $sql .= " and province='$province'";
-if ($initial != '')
+}
+if ($initial != '') {
     $sql .= " and initial='$initial'";
+}
 $dh_list = db_fetch_arrays($sql, $conn);
 ?>
+
+<div id="dialog-confirm" title="删除该记录？" style="display: none;">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>您确认删除该记录?</p>
+</div>
+
 <div class="tt2">
     <div class="column">
         <?php $province_list = db_fetch_arrays("SELECT province,COUNT(*) AS total FROM wdzx_navigation_links GROUP BY province ORDER BY total DESC;", $conn); ?>
@@ -33,7 +41,7 @@ $dh_list = db_fetch_arrays($sql, $conn);
 
             <div class="clear"></div>
         </div>
-        <a href="/admin_add.php">加入导航</a>
+        <a href="admin_add.php">加入导航</a>
     </div>
     <div class="content">
         <ul class="left tbalist">
@@ -148,24 +156,36 @@ $dh_list = db_fetch_arrays($sql, $conn);
     $(".conlisttext").children('li').mouseout(function () {
         $(this).children('.kc3').css("display", "none");
     });
-    $(".kc3").click(function () {      
-        if (window.confirm("确认删除吗",'height=350,width=400,toolbar=no,location=no,status=no,menubar=no')) {
-            var id = $(this).attr("id");
-            $.ajax({
-                type: "post",
-                url: 'admin_del.php',
-                dataType: "json",
-                data: {id: id},
-                success: function (msg) {
-                    if (msg === 1) {
-                        location.reload();
-                    } else {
-                        alert("删除失败，请联系管理员！");
-                    }
+    $(".kc3").click(function () {
+        var data = $(this).attr("id");
+        $("#dialog-confirm").dialog({
+            resizable: false,
+            height: 140,
+            modal: true,
+            buttons: {
+                "确定": function () {
+                    $.ajax({
+                        type: "post",
+                        url: 'admin_del.php',
+                        dataType: "json",
+                        data: {id: data},
+                        success: function (msg) {
+                            if (msg === 1) {
+                                location.reload();
+                            } else {
+                                alert("删除失败，请联系管理员！");
+                            }
+                        }
+                    });
+                },
+                "取消": function () {
+                    $(this).dialog("close");
                 }
-            });
-        }
+            }
+        });
+
+
 
     });
 </script>
-<?php include 'common/footer.php'; ?>
+<?php include '../common/footer.php'; ?>

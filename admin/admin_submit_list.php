@@ -1,12 +1,14 @@
 <?php
-include 'common/header.php';
-$id = $_REQUEST["id"];
-if ($id > 0) {
-    mysql_query("update wdzx_navigation_submit set fstatus=1 where id=$id");
+include '../common/admin_header.php';
+if (isset($_REQUEST["id"])&&!empty($_REQUEST["id"])) {
+    $id = $_REQUEST["id"];
+    if ($id > 0) {
+        mysql_query("update wdzx_navigation_submit set fstatus=1 where id=$id");
+    }
 }
 $sql = "select * from wdzx_navigation_submit order by id desc";
 $dh_list = db_fetch_arrays($sql, $conn);
-if ($_GET['del'] == 'tok') {
+if (isset($_GET['del']) && $_GET['del'] == 'tok') {
     $sqlt = 'delete from wdzx_navigation_submit where id=' . $id;
     mysql_query($sqlt);
 }
@@ -14,13 +16,12 @@ if ($_GET['del'] == 'tok') {
 
 
 
-$page = $_GET["page"];
-if (isset($_POST["page"]) && $_POST["page"] != "") {
-    $page = $_POST['page'];
-}
-if ($page == "") {
+if (isset($_REQUEST["page"]) && !empty($_REQUEST["page"])) {
+    $page = $_REQUEST["page"];
+} else {
     $page = 1;
 }
+
 
 if (is_numeric($page)) {
     $page_size = 20;
@@ -34,7 +35,7 @@ if (is_numeric($page)) {
 }
 ?>
 
-<table align="center" border="1">
+<table align="center" border="1" >
     <tr>
         <th>名称</th>
         <th>网址</th>
@@ -46,7 +47,7 @@ if (is_numeric($page)) {
         <th>操作</th>
             <!--<th>添加时间</th>-->
     </tr>
-<?php while ($row = mysql_fetch_assoc($result)) { ?>
+    <?php while ($row = mysql_fetch_assoc($result)) { ?>
         <tr>
             <td><?php echo $row['name']; ?></td>
             <td><?php echo $row['url']; ?></td>
@@ -58,9 +59,9 @@ if (is_numeric($page)) {
             <td><a style="color:red" href="?del=tok&id=<?php echo $row['id']; ?>" onclick="condel();">删除</a></td>
         </tr>
 
-    <?php
-}
-?>
+        <?php
+    }
+    ?>
 
 </table>
 <div style="width:1000px;margin:0 auto;padding:0">
@@ -79,7 +80,7 @@ if (is_numeric($page)) {
         echo "<a href=?page=" . ($page + 1) . ">下一页</a> | ";
         echo "<a href=?page=" . $page_count . ">尾页</a>";
     }
-    mysql_free_result($sql);
+    mysql_close($conn);
     ?>
 </div>
 <script type="text/javascript">
@@ -91,4 +92,4 @@ if (is_numeric($page)) {
 
 
 </script>
-<?php include 'common/footer.php'; ?>
+<?php include '../common/footer.php'; ?>

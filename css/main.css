@@ -10,7 +10,7 @@ img{border:none;vertical-align:top}
 .w1000{width:1000px;margin:0 auto}
 .mt10{margin-top:10px}
 
-#header{background:#f3f3f3;height:30px;line-height:30px;border-bottom:2px solid #fff}
+#header{background:#f3f3f3;line-height:30px;border-bottom:2px solid #fff}
 .swsy{padding-top:4px;width:152px}
 .swsy a{width:150px;height:20px;background:url(../images/swsy_03.jpg) no-repeat 10px center #f8f8f8;display:block;line-height:20px;text-indent:30px;color:#b4b4b4;border:1px solid #c9c9c9}
 .swsy a:hover{background:url(../images/swsy_03.jpg) no-repeat 10px center #fff}
@@ -124,3 +124,6 @@ img{border:none;vertical-align:top}
 .subcloumn li a{color:#a2a2a2}
 .subcloumn li a:hover{color:#333}
 .kc3 {background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -835px; width: 20px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:none; }
+#admin_login{width: 998px; margin: 0 auto; font-size: 16px;height: 30px;}
+#admin_login span{float: left;}
+#admin_login a{float: right;margin-right: 10px;}

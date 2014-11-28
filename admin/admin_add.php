@@ -1,39 +1,29 @@
-<?php include 'common/header.php'; ?>
+<?php include '../common/admin_header.php'; ?>
 <?php
-if (!empty($_REQUEST["id"])) {
-    $id = $_REQUEST["id"];
-} else {
-    echo "<script>alert('没有id');</script>";
-    exit();
-}
-$pt = db_fetch_array("SELECT * FROM wdzx_navigation_links where id=$id;", $conn);
 empty($_REQUEST["name"]) ? $name = "" : $name = $_REQUEST["name"];
 empty($_REQUEST["url"]) ? $url = "" : $url = $_REQUEST["url"];
 empty($_REQUEST["initial"]) ? $initial = "" : $initial = $_REQUEST["initial"];
 empty($_REQUEST["level"]) ? $level = "" : $level = $_REQUEST["level"];
 empty($_REQUEST["province"]) ? $province = "" : $province = $_REQUEST["province"];
-empty($_REQUEST["is_hot"]) ? $is_hot = 0 : $is_hot = $_REQUEST["is_hot"];
 
 if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != '') {
-    $is_name = db_fetch_array("SELECT name FROM wdzx_navigation_links where id!={$id} and name='$name';", $conn);
+    $is_name = db_fetch_array("SELECT name FROM wdzx_navigation_links where name='$name';", $conn);
     if (!empty($is_name)) {
-        echo "<script>alert('网站名称已存在，请重新填写');widndow.location.href;</script>";
+        echo "<script>alert('网站名称已存在，请重新填写');widndow.location.href='';</script>";
     } else {
-        mysql_query("update wdzx_navigation_links set name='$name',url='$url',initial='$initial',level=$level,province='$province',is_hot=$is_hot where id=$id", $conn);
-        echo "<script>alert('修改成功');window.location.href='admin_list.php';</script>";
+        mysql_query("insert into wdzx_navigation_links(name,url,initial,level,province) value('$name','$url','$initial',$level,'$province');", $conn);
+        echo "<script>alert('添加成功');window.location.href='admin_list.php';</script>";
     }
 }
 ?>
 <div class="subline"></div>
 <div class="w1000" style="margin-top: 60px; padding-bottom: 70px">
     <div class="left subtable">
-        <form action="admin_edit.php" method="post">
-            <input type="hidden" id="id" name="id" value="<?php echo $id; ?>" />
+        <form action="admin_add.php" method="post">
             <table width="510" border="0" cellspacing="0" cellpadding="0">
-
                 <tr>
                     <td width="109" class="tbtitle"><span>*</span>网站名称：</td>
-                    <td width="401"><input name="name" id="name" type="text" class="subinput" value="<?php echo $pt['name']; ?>" /></td>
+                    <td width="401"><input name="name" id="name" type="text" class="subinput" /></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -42,7 +32,7 @@ if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != 
 
                 <tr>
                     <td width="109" class="tbtitle"><span>*</span>URL：</td>
-                    <td width="401"><input name="url" id="url" type="text" class="subinput" value="<?php echo $pt['url']; ?>" /></td>
+                    <td width="401"><input name="url" id="url" type="text" class="subinput"/></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -52,21 +42,7 @@ if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != 
 
                 <tr>
                     <td width="109" class="tbtitle"><span>*</span>首字母：</td>
-                    <td width="401"><input name="initial" id="initial" type="text" class="subinput" value="<?php echo $pt['initial']; ?>" /></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="lr">如：网贷中心</td>
-                </tr>
-
-                <tr>
-                    <td width="109" class="tbtitle"><span>*</span>是否推荐：</td>
-                    <td width="401">
-                        <select id="is_hot" name="is_hot">
-                            <option value="0" <?php if($pt['is_hot']==0){echo 'selected'; }?>>不推荐</option>
-                            <option value="1" <?php if($pt['is_hot']==1){echo 'selected'; }?>>推荐</option>
-                        </select>
-                    </td>
+                    <td width="401"><input name="initial" id="initial" type="text" class="subinput"/></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -92,7 +68,7 @@ if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != 
 
                 <tr>
                     <td width="109" class="tbtitle"><span>*</span>省份：</td>
-                    <td width="401"><input name="province" id="province" type="text" class="subinput" value="<?php echo $pt['province']; ?>" /></td>
+                    <td width="401"><input name="province" id="province" type="text" class="subinput"/></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -115,4 +91,4 @@ if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != 
         4.本站只与PR>=2的网站交换链接，不符合条件者请 勿提交</div>
     <div class="clear"></div>
 </div>
-<?php include 'common/footer.php'; ?>
+<?php include '../common/footer.php'; ?>

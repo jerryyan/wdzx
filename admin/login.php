@@ -36,11 +36,11 @@
                 <form name="LoginForm" method="post" action="login_db.php" onSubmit="return InputCheck(this)">
                     <p>
                         <label for="username" class="label">用户名:</label>
-                        <input id="username" name="username" type="text" class="input" />
+                        <input id="username" name="username" type="text" class="input" value=""/>
                         <p/>
                         <p>
                             <label for="password" class="label">密 码:</label>
-                            <input id="password" name="password" type="password" class="input" />
+                            <input id="password" name="password" type="password" class="input" value="" />
                             <p/>
                             <p>
                                 <input type="submit" name="submit" value="  确 定  " class="left" />
