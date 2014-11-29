@@ -1,20 +1,7 @@
 <?php
 include '../common/admin_header.php';
-if (isset($_REQUEST["id"])&&!empty($_REQUEST["id"])) {
-    $id = $_REQUEST["id"];
-    if ($id > 0) {
-        mysql_query("update wdzx_navigation_submit set fstatus=1 where id=$id");
-    }
-}
 $sql = "select * from wdzx_navigation_submit order by id desc";
 $dh_list = db_fetch_arrays($sql, $conn);
-if (isset($_GET['del']) && $_GET['del'] == 'tok') {
-    $sqlt = 'delete from wdzx_navigation_submit where id=' . $id;
-    mysql_query($sqlt);
-}
-
-
-
 
 if (isset($_REQUEST["page"]) && !empty($_REQUEST["page"])) {
     $page = $_REQUEST["page"];
@@ -35,6 +22,9 @@ if (is_numeric($page)) {
 }
 ?>
 
+<div id="dialog-confirm" title="删除该记录？" style="display: none;">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>您确认删除该记录?</p>
+</div>
 <table align="center" border="1" >
     <tr>
         <th>名称</th>
@@ -55,8 +45,8 @@ if (is_numeric($page)) {
             <td><?php echo $row['province']; ?></td>
             <td><?php echo $row['year']; ?></td>
             <td><?php echo $row['logo_url']; ?></td>
-            <td><a href="?id=<?php echo $row['id']; ?>"><?php echo $row['fstatus'] == 0 ? "未审核" : "已审核"; ?></a></td>
-            <td><a style="color:red" href="?del=tok&id=<?php echo $row['id']; ?>" onclick="condel();">删除</a></td>
+            <td><?php echo $row['fstatus'] == 0 ? "<a style='cursor:pointer;' class='ischeck' id={$row['id']}>未审核</a>" : "已审核"; ?></td>
+            <td><a style="color:red;cursor:pointer;" class='del' id="<?php echo $row['id']; ?>" >删除</a></td>
         </tr>
 
         <?php
@@ -84,12 +74,53 @@ if (is_numeric($page)) {
     ?>
 </div>
 <script type="text/javascript">
+    $(".ischeck").click(function () {
+         var data = $(this).attr("id");
+        $.ajax({
+            type: "post",
+            url: 'admin_dbdo.php',
+            dataType: "json",
+            data: {id: data, do: 'ischeck'},
+            success: function (msg) {
+                if (msg === 1) { 
+                  window.location.href="admin_submit_list.php?page=<?php echo $page; ?>";
+                } else {
+                    alert("审核，请联系管理员！");
+                }
+            }
+        });
+    });
 
-    function condel() {
-        alert('删除成功');
-        window.location.reload()
-    }
 
-
+    $(".del").click(function () {
+        var data = $(this).attr("id");
+        $("#dialog-confirm").dialog({
+            resizable: false,
+            height: 140,
+            modal: true,
+            buttons: {
+                "确定": function () {
+                    $.ajax({
+                        type: "post",
+                        url: 'admin_del.php',
+                        dataType: "json",
+                        data: {id: data, del: 'submitlist'},
+                        success: function (msg) {
+                            if (msg === 1) {
+                                alert("删除成功");                              
+                              location.reload();
+                            } else {
+                                alert("删除失败，请联系管理员！");
+                            }
+                        }
+                    });
+                },
+                "取消": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
 </script>
-<?php include '../common/footer.php'; ?>
+<?php
+include '../common/footer.php';

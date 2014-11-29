@@ -59,7 +59,7 @@
             <?php
             session_start();
             if (isset($_SESSION["username"]) && time() > $_SESSION['username'] + 1200) {
-                echo "<div id='admin_login' ><span>当前管理员：{$_SESSION['username']}</span><a href='login_db.php?action=logout'>注销</a></div>";
+                echo "<div id='admin_login' ><span>当前管理员：{$_SESSION['username']}</span>|<a href='admin_list.php'>导航列表</a>|<a href='admin_submit_list.php'>审核列表</a><a id='logout' href='login_db.php?action=logout'>注销</a></div>";
             } else {
                 header("Location:login.php");
                 exit;

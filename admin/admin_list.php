@@ -4,29 +4,15 @@ empty($_REQUEST["province"]) ? $province = "" : $province = $_REQUEST["province"
 empty($_REQUEST["initial"]) ? $initial = "" : $initial = $_REQUEST["initial"];
 
 $szm = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
-
-
 $sql = "select * from wdzx_navigation_links  where 1=1 ";
-$sql1 = "select count(*) as total from wdzx_navigation_links  where 1=1";
+
 if ($province != '') {
     $sql .= " and province='$province'";
-    $sql1 .= " and province='$province'";
 }
 if ($initial != '') {
     $sql .= " and initial='$initial'";
-    $sql1 .= " and initial='$initial'";
-}
-$total = db_fetch_array($sql1, $conn);
-include 'page.php';
-$page_size = 40; //每页数量
-$p = isset($_GET['p']) && !empty($_GET['p']) ? $_GET['p'] : 1;
-$url = "http://" . $_SERVER ['HTTP_HOST'] . $_SERVER['PHP_SELF'] . "?p=";
-$offset = $p - 1;
-if ($total['total'] > $page_size) {
-    $sql.=" limit $offset,$page_size";
 }
 $dh_list = db_fetch_arrays($sql, $conn);
-$subPages = new Page();
 ?>
 
 
@@ -66,22 +52,17 @@ $subPages = new Page();
             <li onmousemove="level_show(2)"><a href="#" id="type_2">人气平台</a></li>
             <li onmousemove="level_show(3)"><a href="#" id="type_3">成长平台</a></li>
             <li onmousemove="level_show(4)"><a href="#" id="type_4">新平台</a></li>
-            <li onmousemove="level_show(5)"><a href="#" id="type_5">风险平台</a></li>
+            <li onmousemove="level_show(5)"><a href="#" id="type_5">问题平台</a></li>
         </ul>
         <div class="left conlist" id="level_0">
             <div class="clear"></div>
             <div class="clline"></div>
             <ul class="conlisttext">
                 <?php foreach ($dh_list as $dh) { ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <i class="kc3" id="<?php echo $dh['id']; ?>"></i></li>
+                <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="inspect" id="<?php echo $dh['id']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
 
                 <?php } ?>
             </ul>
-       <?php
-        if ($total['total'] > $page_size) {
-            $subPages->fenye($page_size, $total['total'], $p, 5, $url, 2);
-        }
-        ?>
             <div class="clear"></div>
         </div>
 
@@ -93,8 +74,8 @@ $subPages = new Page();
                         continue;
                     }
                     ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <i class="kc3" id="<?php echo $dh['id']; ?>"></i></li>
-                <?php } ?>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="inspect" id="<?php echo $dh['id']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
+<?php } ?>
             </ul>
             <div class="clear"></div>
         </div>
@@ -107,8 +88,8 @@ $subPages = new Page();
                         continue;
                     }
                     ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <i class="kc3" id="<?php echo $dh['id']; ?>"></i></li>
-                <?php } ?>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a><span class='doing'> <i class="inspect" id="<?php echo $dh['id']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
+<?php } ?>
             </ul>
             <div class="clear"></div>
         </div>
@@ -121,8 +102,8 @@ $subPages = new Page();
                         continue;
                     }
                     ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <i class="kc3" id="<?php echo $dh['id']; ?>"></i></li>
-                <?php } ?>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="inspect" id="<?php echo $dh['id']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
+<?php } ?>
             </ul>
             <div class="clear"></div>
         </div>
@@ -135,8 +116,8 @@ $subPages = new Page();
                         continue;
                     }
                     ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <i class="kc3" id="<?php echo $dh['id']; ?>"></i></li>
-                <?php } ?>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="inspect" id="<?php echo $dh['id']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
+<?php } ?>
             </ul>
             <div class="clear"></div>
         </div>
@@ -149,17 +130,17 @@ $subPages = new Page();
                         continue;
                     }
                     ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <i class="kc3" id="<?php echo $dh['id']; ?>"></i></li>
-                <?php } ?>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="inspect" id="<?php echo $dh['id']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
+<?php } ?>
             </ul>
             <div class="clear"></div>
-        </div>       
- 
+        </div>
+
         <div class="clear"></div>
     </div>
 </div>
 <script type="text/javascript">
-<!--
+    <!--
     function level_show(id) {
         for (var i = 0; i < 6; i++) {
             $("#level_" + i).hide();
@@ -169,13 +150,13 @@ $subPages = new Page();
         $("#level_" + id).show();
         $("#type_" + id).attr("class", "current");
     }
-//-->
+    //-->
 
     $(".conlisttext").children('li').mouseover(function () {
-        $(this).children('.kc3').css("display", "inline-block");
+        $(this).children('.doing').css("display", "inline-block");
     });
     $(".conlisttext").children('li').mouseout(function () {
-        $(this).children('.kc3').css("display", "none");
+        $(this).children('.doing').css("display", "none");
     });
     $(".kc3").click(function () {
         var data = $(this).attr("id");
@@ -189,9 +170,10 @@ $subPages = new Page();
                         type: "post",
                         url: 'admin_del.php',
                         dataType: "json",
-                        data: {id: data},
+                        data: {id: data, del: 'list'},
                         success: function (msg) {
                             if (msg === 1) {
+                                alert("删除成功");
                                 location.reload();
                             } else {
                                 alert("删除失败，请联系管理员！");

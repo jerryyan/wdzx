@@ -123,7 +123,10 @@ img{border:none;vertical-align:top}
 .subcloumn li{float:left;margin-right:15px;line-height:26px}
 .subcloumn li a{color:#a2a2a2}
 .subcloumn li a:hover{color:#333}
-.kc3 {background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -835px; width: 20px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:none; }
+.inspect {background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -590px; width: 20px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
+.kc3 {background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -835px; width: 20px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
+.doing{display: none}
 #admin_login{width: 998px; margin: 0 auto; font-size: 16px;height: 30px;}
 #admin_login span{float: left;}
-#admin_login a{float: right;margin-right: 10px;}
+#admin_login #logout{float: right;margin-right: 10px;}
+.page_list{float: right;margin-right: 60px;margin-top: 30px;}

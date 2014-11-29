@@ -1,12 +1,12 @@
 <?php
 include 'common/header.php';
-$name = $_REQUEST["name"];
-$url = $_REQUEST["url"];
-$logo_url = $_REQUEST["logo_url"];
-$link_qq = $_REQUEST["link_qq"];
-$summary = $_REQUEST["summary"];
-$province = $_REQUEST["province"];
-$year = $_REQUEST["year"];
+$name = isset($_REQUEST["name"]) && !empty($_REQUEST['name']) ? $_REQUEST['name'] : "";
+$url = isset($_REQUEST["url"]) && !empty($_REQUEST['url']) ? $_REQUEST['url'] : "";
+$logo_url = isset($_REQUEST["logo_url"]) && !empty($_REQUEST['logo_url']) ? $_REQUEST['logo_url'] : "";
+$link_qq = isset($_REQUEST["link_qq"]) && !empty($_REQUEST['link_qq']) ? $_REQUEST['link_qq'] : "";
+$summary = isset($_REQUEST["summary"]) && !empty($_REQUEST['summary']) ? $_REQUEST['summary'] : "";
+$province = isset($_REQUEST["province"]) && !empty($_REQUEST['province']) ? $_REQUEST['province'] : "";
+$year = isset($_REQUEST["year"]) && !empty($_REQUEST['year']) ? $_REQUEST['year'] : "";
 $addtime = time();
 if (($name != '') && ($url != '') && ($summary != '')) {
     $sql = "insert into wdzx_navigation_submit(name,url,logo_url,link_qq,summary,province,year,add_time) values('{$name}','{$url}','{$logo_url}','{$link_qq}','{$summary}','{$province}','{$year}', $addtime)";
@@ -58,11 +58,11 @@ if (($name != '') && ($url != '') && ($summary != '')) {
 
                 <tr>
                     <td width="109" class="tbtitle"><span>*</span>上线年份：</td>
-                    <td width="401"><input name="year" id="year" type="text" class="subinput" placeholder="如：2014年6月26日" /></td>
+                    <td width="401"><input name="year" id="year" type="text" class="subinput" placeholder="如：2014-06-26" /></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
-                    <td class="lr">如：2014年6月26日</td>
+                    <td class="lr">如：2014-06-26</td>
                 </tr>
 
                 <tr>
@@ -99,6 +99,11 @@ if (($name != '') && ($url != '') && ($summary != '')) {
                 return false;
             }
         }
+
+        $(function () {
+          $("#year").datepicker();
+  
+        });
     </script>
     <div class="left zs">1.带有 <span>*</span> 的为必填项，请认真填写。<br />
         2.网站简介和logo地址为选填项，但需注意，只有填 写了网站简介才有机会申请图文链接；只有填写了

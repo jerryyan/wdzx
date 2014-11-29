@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="js/jquery-ui-1.11.2/jquery-ui.min.css"/>
 <script src="js/jquery-2.1.1.js"></script>
 <script src="js/jquery-ui-1.11.2/jquery-ui.min.js"></script>
+<script src="js/jquery-ui-1.11.2/jquery.ui.datepicker-zh-CN.js"></script>
 <script type="text/javascript">
             // 设置为主页
             function SetHome(obj, vrl) {
