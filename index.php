@@ -7,44 +7,13 @@ $sql = "select * from wdzx_navigation_links  where 1=1 ";
 $sql1 = "select count(*) as total from wdzx_navigation_links  where 1=1";
 if ($province != '') {
     $sql .= " and province='$province'";
-    $sql1 .= " and province='$province'";
 }
 if ($initial != '') {
     $sql .= " and initial='$initial'";
-    $sql1 .= " and initial='$initial'";
 }
-
-
-for ($i = 1; $i <= 5; $i++) {
-    $result = db_fetch_array($sql1 . " and level=$i", $conn);
-    $total[$i] = $result['total'];
-}
-$re = db_fetch_array($sql1, $conn);
-$total['all'] = $re['total'];
-
-include 'admin/page.php';
-$page_size = 30; //每页数量
-$p = isset($_GET['p']) && !empty($_GET['p']) ? $_GET['p'] : 1;
-$url = $_SERVER['PHP_SELF'] . "?province=" . $province . "&initial=" . $initial . "&p=";
-
-$offset = $p - 1;
-
-foreach ($total as $k => $v) {
-    if ($k != 'all') {
-        $level = " and level=$k";
-    } else {
-        $level = " and 2=2 ";
-    }
-    if ($v > $page_size) {
-        $limit = " limit $offset,$page_size";
-    } else {
-        $limit = " and 3=3";
-    }
-    $rr = $sql . $level . $limit;
-    $dh_list[$k] = db_fetch_arrays($rr, $conn);
-}
-$subPages = new Page();
+$dh_list = db_fetch_arrays($sql, $conn);
 ?>
+
 <div class="tt">
 
     <div class="ptlist">	    
@@ -80,9 +49,9 @@ $subPages = new Page();
     <div class="column">
         <?php $province_list = db_fetch_arrays("SELECT province,COUNT(*) AS total FROM wdzx_navigation_links GROUP BY province ORDER BY total DESC;", $conn); ?>
         <div class="left cllist"><span>地区分类：</span>&nbsp;
-            <a href="?initial=<?php echo $initial; ?>&p=<?php echo $p; ?>" <?php if ($province == "") { ?>class="current"<?php } ?>>全部</a>
+            <a href="?initial=<?php echo $initial; ?>" <?php if ($province == "") { ?>class="current"<?php } ?>>全部</a>
             <?php foreach ($province_list as $value) { ?>
-                <a href="?province=<?php echo $value["province"]; ?>&initial=<?php echo $initial; ?>&p=<?php echo $p; ?>" <?php if ($province == $value["province"]) { ?>class="current"<?php } ?>><?php echo $value["province"]; ?>(<?php echo $value["total"]; ?>)</a>
+                <a href="?province=<?php echo $value["province"]; ?>&initial=<?php echo $initial; ?>" <?php if ($province == $value["province"]) { ?>class="current"<?php } ?>><?php echo $value["province"]; ?>(<?php echo $value["total"]; ?>)</a>
             <?php } ?>.
 
 
@@ -91,10 +60,10 @@ $subPages = new Page();
 
         <div class="clline"></div>
         <div class="cllist2"><span>字母查找：</span>&nbsp;
-            <a href="?province=<?php echo $province; ?>&p=<?php echo $p; ?>" <?php if ($initial == '') { ?>class="current"<?php } ?>>全</a>
+            <a href="?province=<?php echo $province; ?>" <?php if ($initial == '') { ?>class="current"<?php } ?>>全</a>
 
             <?php foreach ($szm as $s) { ?>
-                <a href="?initial=<?php echo $s; ?>&province=<?php echo $province; ?>&p=<?php echo $p; ?>" <?php if ($initial == $s) { ?>class="current"<?php } ?>><?php echo $s; ?></a>
+                <a href="?initial=<?php echo $s; ?>&province=<?php echo $province; ?>" <?php if ($initial == $s) { ?>class="current"<?php } ?>><?php echo $s; ?></a>
             <?php } ?>
             <div class="cler"></div>
             <div class="clear"></div>
@@ -109,44 +78,44 @@ $subPages = new Page();
             <li onmousemove="level_show(3)"><a href="#" id="type_3">成长平台</a></li>
             <li onmousemove="level_show(4)"><a href="#" id="type_4">新平台</a></li>
             <li onmousemove="level_show(5)"><a href="#" id="type_5">问题平台</a></li>
-                <!--<span style="position:absolute ;top:285px;left:30px;font-size:12px;color:red;">个</span>--><?php //echo $row[0];      ?>
+                <!--<span style="position:absolute ;top:285px;left:30px;font-size:12px;color:red;">个</span>--><?php //echo $row[0];           ?>
         </ul>
         <div class="left conlist" id="level_0">
             <div class="clear"></div>
             <div class="clline"></div>
             <ul class="conlisttext">
-                <?php foreach ($dh_list['all'] as $dh) { ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> </li>
+                <?php foreach ($dh_list as $dh) { ?>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a><?php
+                        if (!empty($dh['inspect'])) {
+                            echo "<i class='inspect' onclick=window.open('" . $dh['inspect'] . "','_blank')></i>";
+                        }
+                        ?><?php
+                        if (!empty($dh['problem'])) {
+                            echo "<i class='problem' onclick=window.open('" . $dh['problem'] . "','_blank')></i>";
+                        }
+                        ?> </li>
 
                 <?php } ?>
             </ul>
 
-            <div class="clear"></div>
-            <div class="page_list">
-                <?php
-                if ($total['all'] > $page_size) {
-                    $subPages->fenye($page_size, $total['all'], $p, 5, $url, 2);
-                }
-                ?>
-            </div>
+            <div class="clear"></div>   
         </div>
 
         <div class="left conlist" id="level_1" style="display:none;">
             <div class="clear"></div>
             <div class="clline"></div>
             <ul class="conlisttext">
-                <?php foreach ($dh_list[1] as $dh) { ?>
+                <?php
+                foreach ($dh_list as $dh) {
+                    if ($dh["level"] != 1) {
+                        continue;
+                    }
+                    ?>
+
                     <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a></li>
                 <?php } ?>
             </ul>  
             <div class="clear"></div>
-            <div class="page_list">
-                <?php
-                if ($total['1'] > $page_size) {
-                    $subPages->fenye($page_size, $total['1'], $p, 5, $url, 2);
-                }
-                ?>
-            </div>
         </div>
     </div>
 
@@ -155,19 +124,15 @@ $subPages = new Page();
         <div class="clline"></div>
         <ul class="conlisttext">
             <?php
-            foreach ($dh_list[2] as $dh) {           
+            foreach ($dh_list as $dh) {
+                if ($dh["level"] != 2) {
+                    continue;
+                }
                 ?>
                 <li><a href="<?php echo $dh['url']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a></li>
             <?php } ?>
         </ul>
-        <div class="clear"></div>
-              <div class="page_list">
-                <?php
-                if ($total['1'] > $page_size) {
-                    $subPages->fenye($page_size, $total['1'], $p, 5, $url, 2);
-                }
-                ?>
-            </div>
+        <div class="clear"></div>  
     </div>
 
     <div class="left conlist" id="level_3" style="display:none;">
@@ -175,20 +140,16 @@ $subPages = new Page();
         <div class="clline"></div>
         <ul class="conlisttext">
             <?php
-            foreach ($dh_list[3] as $dh) {
-          
+            foreach ($dh_list as $dh) {
+                if ($dh["level"] != 3) {
+                    continue;
+                }
                 ?>
                 <li><a href="<?php echo $dh['url']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a></li>
             <?php } ?>
         </ul>
         <div class="clear"></div>
-              <div class="page_list">
-                <?php
-                if ($total['1'] > $page_size) {
-                    $subPages->fenye($page_size, $total['1'], $p, 5, $url, 2);
-                }
-                ?>
-            </div>
+
     </div>
 
     <div class="left conlist" id="level_4" style="display:none;">
@@ -196,19 +157,16 @@ $subPages = new Page();
         <div class="clline"></div>
         <ul class="conlisttext">
             <?php
-            foreach ($dh_list[4] as $dh) {          
+            foreach ($dh_list as $dh) {
+                if ($dh["level"] != 4) {
+                    continue;
+                }
                 ?>
                 <li><a href="<?php echo $dh['url']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a></li>
             <?php } ?>
         </ul>
         <div class="clear"></div>
-              <div class="page_list">
-                <?php
-                if ($total['1'] > $page_size) {
-                    $subPages->fenye($page_size, $total['1'], $p, 5, $url, 2);
-                }
-                ?>
-            </div>
+
     </div>
 
     <div class="left conlist" id="level_5" style="display:none;">
@@ -216,20 +174,16 @@ $subPages = new Page();
         <div class="clline"></div>
         <ul class="conlisttext">
             <?php
-            $rev_dh_list = array_reverse($dh_list[5]);
-            foreach ($rev_dh_list as $dh) {          
+            $rev_dh_list = array_reverse($dh_list);
+            foreach ($rev_dh_list as $dh) {
+                if ($dh["level"] != 5) {
+                    continue;
+                }
                 ?>
                 <li><a style="color:red;" href="<?php echo $dh['url']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a></li>
             <?php } ?>
         </ul>
         <div class="clear"></div>
-              <div class="page_list">
-                <?php
-                if ($total['1'] > $page_size) {
-                    $subPages->fenye($page_size, $total['1'], $p, 5, $url, 2);
-                }
-                ?>
-            </div>
     </div>
 
     <div class="clear"></div>
