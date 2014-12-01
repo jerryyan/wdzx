@@ -57,7 +57,7 @@ if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != 
                             <option value="2">人气平台</option>
                             <option value="3">成长平台</option>
                             <option value="4">新平台</option>
-                            <option value="5">风险平台</option>
+                            <option value="5">问题平台</option>
                         </select>
                     </td>
                 </tr>

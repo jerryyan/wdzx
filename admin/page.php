@@ -10,7 +10,6 @@ class Page {
     private $page_array = array(); //用来构造分页的数组   
     private $subPage_link; //每个分页的链接   
 
-
     /*
       __construct是SubPages的构造函数，用来在创建类的时候自动运行.
       @$each_disNums   每页显示的条目数
@@ -26,7 +25,7 @@ class Page {
       example：   当前第1/453页 [首页] [上页] 1 2 3 4 5 6 7 8 9 10 [下页] [尾页]
      */
 
-    public  function fenye($each_disNums, $nums, $current_page, $sub_pages, $subPage_link, $subPage_type) {
+    public function fenye($each_disNums, $nums, $current_page, $sub_pages, $subPage_link, $subPage_type) {
         $this->each_disNums = intval($each_disNums);
         $this->nums = intval($nums);
         if (!$current_page) {
@@ -60,7 +59,7 @@ class Page {
       show_SubPages函数用在构造函数里面。而且用来判断显示什么样子的分页
      */
 
-    public  function show_SubPages($subPage_type) {
+    public function show_SubPages($subPage_type) {
         if ($subPage_type == 1) {
             $this->subPageCss1();
         } elseif ($subPage_type == 2) {
@@ -150,6 +149,7 @@ class Page {
 
     public function subPageCss2() {
         $subPageCss2Str = "";
+        $subPageCss2Str.="共" . $this->nums . "条记录，";
         $subPageCss2Str.="当前第" . $this->current_page . "/" . $this->pageNums . "页 ";
 
 

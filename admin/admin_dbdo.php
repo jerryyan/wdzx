@@ -27,6 +27,25 @@ if (isset($_POST['do']) && $_POST['do'] == "ischeck") {
     }
 }
 
+
+if (isset($_POST['do']) && $_POST['do'] == "inspect") {
+    $id = $_POST['id'];
+    $address = $_POST['address'];
+    $sql = "update wdzx_navigation_links set inspect='$address' where id=$id";
+    $result = mysql_query($sql, $conn);
+    echo $result;
+    exit();
+}
+
+if (isset($_POST['do']) && $_POST['do'] == "problem") {
+    $id = $_POST['id'];
+    $address = $_POST['address'];
+    $sql = "update wdzx_navigation_links set problem='$address' where id=$id";
+    $result = mysql_query($sql, $conn);
+    echo $result;
+    exit();
+}
+
 //2个时间月份比较
 function getMonthNum($date1, $date2, $tags = '-') {
     $date1 = explode($tags, $date1);
