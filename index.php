@@ -80,7 +80,7 @@ $json_names = json_encode($names);
     <div class="ptlisttitle left">网贷平台导航</div>
     <div class="search_box">
         <label id="kw">关键字：</label>      
-        <input id="keywords" type="text" placeholder="请输入平台名称" value="<?php if (!empty($key)){ echo $key; }?> " >
+        <input id="keywords" type="text" placeholder="请输入平台名称" value="<?php if (!empty($key)){ echo $key; }?>" >
         <input type="submit" value="" class="search_ico" />       
     </div>
     <ul class="left subcloumn">
