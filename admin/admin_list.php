@@ -129,7 +129,8 @@ $dh_list = db_fetch_arrays($sql, $conn);
         <div class="left conlist" id="level_5" style="display:none;">
             <ul class="conlisttext">
                 <?php
-                foreach ($dh_list as $dh) {
+                $rev_dh_list = array_reverse($dh_list);
+                foreach ($rev_dh_list as $dh) {
                     if ($dh["level"] != 5) {
                         continue;
                     }

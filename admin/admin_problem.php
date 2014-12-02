@@ -27,7 +27,7 @@ $subPages = new Page();
             <td><?php echo $v['url']; ?></td>
             <td><?php echo $v['province']; ?></td>
             <td><?php echo $v['problem']; ?></td>
-            <td style="text-align:center;"><a style="cursor:pointer;" class="problem" id="<?php echo $v['id'] . "#" . $v['problem']; ?>"><?php echo empty($v['problem']) ? "添加" : "修改"; ?></a></td>
+            <td style="text-align:center;"><a style="cursor:pointer;" class="problem_a" id="<?php echo $v['id'] . "#" . $v['problem']; ?>"><?php echo empty($v['problem']) ? "添加" : "修改"; ?></a></td>
         </tr>
 
         <?php
@@ -36,7 +36,7 @@ $subPages = new Page();
 </table>
 <div style="width:900px;margin: 0 auto;"><?php $subPages->fenye($page_size, $total['total'], $p, 5, $url, 2); ?></div>
 <script type="text/javascript">
-    $(".problem").click(function () {       
+    $(".problem_a").click(function () {       
         var data = $(this).attr("id");
         var strs = new Array();
         strs = data.split("#");
