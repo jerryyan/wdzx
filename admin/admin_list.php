@@ -25,6 +25,10 @@ $dh_list = db_fetch_arrays($sql, $conn);
     <p>地址：<textarea id='inaddress' style="vertical-align: top;height: 100px;width: 250px"></textarea></p>
 </div>
 
+<div id="verify-confirm" title="入驻网贷中心地址操作" style="display: none;">
+    <p>地址：<textarea id='verifyaddress' style="vertical-align: top;height: 100px;width: 250px"></textarea></p>
+</div>
+
 <div class="tt2">
     <div class="column">
         <?php $province_list = db_fetch_arrays("SELECT province,COUNT(*) AS total FROM wdzx_navigation_links GROUP BY province ORDER BY total DESC;", $conn); ?>
@@ -63,7 +67,7 @@ $dh_list = db_fetch_arrays($sql, $conn);
             <div class="clline"></div>
             <ul class="conlisttext">
                 <?php foreach ($dh_list as $dh) { ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="inspect" id="<?php echo $dh['id'] . "#" . $dh['inspect']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="verify" id="<?php echo $dh['id'] . "#" . $dh['verify']; ?>"></i> <i class="inspect" id="<?php echo $dh['id'] . "#" . $dh['inspect']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
 
                 <?php } ?>
             </ul>
@@ -166,7 +170,7 @@ $dh_list = db_fetch_arrays($sql, $conn);
     $(".inspect").click(function () {
         var data = $(this).attr("id");
         var strs = new Array();
-        strs = data.split("#");       
+        strs = data.split("#");
         if (strs[1] !== "") {
             $("#inaddress").val(strs[1]);
         }
@@ -191,11 +195,50 @@ $dh_list = db_fetch_arrays($sql, $conn);
                                 alert("操作成功，请联系管理员！");
                             }
                         }
-                    });                     
+                    });
                 },
                 "取消": function () {
                     $(this).dialog("close");
-                     $("#inaddress").val("");
+                    $("#inaddress").val("");
+                }
+            }
+        });
+    });
+
+
+    $(".verify").click(function () {
+        var data = $(this).attr("id");
+        var strs = new Array();
+        strs = data.split("#");
+        if (strs[1] !== "") {
+            $("#verifyaddress").val(strs[1]);
+        }
+        $("#verify-confirm").dialog({
+            resizable: false,
+            height: 250,
+            width: 300,
+            modal: true,
+            buttons: {
+                "确定": function () {
+                    var newaddress = $("#verifyaddress").val();
+                    $.ajax({
+                        type: "post",
+                        url: 'admin_dbdo.php',
+                        dataType: "json",
+                        data: {id: strs[0], do: 'verify', address: newaddress},
+                        success: function (msg) {
+                            if (msg === 1) {
+                                alert("操作成功");
+                                location.reload();
+                            } else {
+                                alert("操作成功，请联系管理员！");
+                            }
+                        }
+                    });
+                },
+                "取消": function () {
+                    $(this).dialog("close");
+                    $("#verifyaddress").val("");
                 }
             }
         });

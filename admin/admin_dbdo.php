@@ -37,6 +37,15 @@ if (isset($_POST['do']) && $_POST['do'] == "inspect") {
     exit();
 }
 
+if (isset($_POST['do']) && $_POST['do'] == "verify") {
+    $id = $_POST['id'];
+    $address = $_POST['address'];
+    $sql = "update wdzx_navigation_links set verify='$address' where id=$id";
+    $result = mysql_query($sql, $conn);
+    echo $result;
+    exit();
+}
+
 if (isset($_POST['do']) && $_POST['do'] == "problem") {
     $id = $_POST['id'];
     $address = $_POST['address'];

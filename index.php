@@ -80,7 +80,11 @@ $json_names = json_encode($names);
     <div class="ptlisttitle left">网贷平台导航</div>
     <div class="search_box">
         <label id="kw">关键字：</label>      
-        <input id="keywords" type="text" placeholder="请输入平台名称" value="<?php if (!empty($key)){ echo $key; }?>" >
+        <input id="keywords" type="text" placeholder="请输入平台名称" value="<?php
+        if (!empty($key)) {
+            echo $key;
+        }
+        ?>" >
         <input type="submit" value="" class="search_ico" />       
     </div>
     <ul class="left subcloumn">
@@ -100,7 +104,7 @@ $json_names = json_encode($names);
 </div>
 <div class="tt2">
     <div class="column">
-        <?php $province_list = db_fetch_arrays("SELECT province,COUNT(*) AS total FROM wdzx_navigation_links GROUP BY province ORDER BY total DESC;", $conn); ?>
+            <?php $province_list = db_fetch_arrays("SELECT province,COUNT(*) AS total FROM wdzx_navigation_links GROUP BY province ORDER BY total DESC;", $conn); ?>
         <div class="left cllist"><span>地区分类：</span>&nbsp;
             <a href="?initial=<?php
             echo $initial;
@@ -110,30 +114,33 @@ $json_names = json_encode($names);
             ?>" <?php if ($province == "") { ?>class="current"<?php } ?>>全部</a>
             <?php foreach ($province_list as $value) { ?>
                 <a href="?province=<?php echo $value["province"]; ?><?php
-                   if ($initial != "") {
-                       echo "&initial=" . $initial;
-                   }if ($key != "") {
-                       echo "&key=" . $key;
-                   }
-                   ?>" <?php if ($province == $value["province"]) { ?>class="current"<?php } ?>><?php echo $value["province"]; ?>(<?php echo $value["total"]; ?>)</a>
+                if ($initial != "") {
+                    echo "&initial=" . $initial;
+                }if ($key != "") {
+                    echo "&key=" . $key;
+                }
+                ?>" <?php if ($province == $value["province"]) { ?>class="current"<?php } ?>><?php echo $value["province"]; ?>(<?php echo $value["total"]; ?>)</a>
 <?php } ?>
         </div>
         <div class="clear"></div>
 
         <div class="clline"></div>
         <div class="cllist2"><span>字母查找：</span>&nbsp;
-            <a href="?province=<?php echo $province; if ($key != "") {
+            <a href="?province=<?php
+            echo $province;
+            if ($key != "") {
                 echo "&key=" . $key;
-            } ?>" <?php if ($initial == '') { ?>class="current"<?php } ?>>全</a>
+            }
+            ?>" <?php if ($initial == '') { ?>class="current"<?php } ?>>全</a>
 
-               <?php foreach ($szm as $s) { ?>
+            <?php foreach ($szm as $s) { ?>
                 <a href="?initial=<?php echo $s; ?><?php
-               if ($province != "") {
-                   echo "&province=" . $province;
-               }if ($key != "") {
-                   echo "&key=" . $key;
-               }
-               ?>" <?php if ($initial == $s) { ?>class="current"<?php } ?>><?php echo $s; ?></a>
+                if ($province != "") {
+                    echo "&province=" . $province;
+                }if ($key != "") {
+                    echo "&key=" . $key;
+                }
+                ?>" <?php if ($initial == $s) { ?>class="current"<?php } ?>><?php echo $s; ?></a>
 <?php } ?>
             <div class="cler"></div>
             <div class="clear"></div>
@@ -148,7 +155,7 @@ $json_names = json_encode($names);
             <li onmousemove="level_show(3)"><a href="#" id="type_3">成长平台</a></li>
             <li onmousemove="level_show(4)"><a href="#" id="type_4">新平台</a></li>
             <li onmousemove="level_show(5)"><a href="#" id="type_5">问题平台</a></li>
-                <!--<span style="position:absolute ;top:285px;left:30px;font-size:12px;color:red;">个</span>--><?php //echo $row[0];                                  ?>
+                <!--<span style="position:absolute ;top:285px;left:30px;font-size:12px;color:red;">个</span>--><?php //echo $row[0];                                    ?>
         </ul>
         <div class="left conlist" id="level_0">
             <div class="clear"></div>
@@ -246,12 +253,15 @@ $json_names = json_encode($names);
         var newcontent = '';
         for (var i = page_index * items_per_page; i < max_elem; i++)
         {
-            newcontent += "<li><a href='"+ members[i][2] + "' target='_blank'><font size='3px;'>" + members[i][1] + "</font></a>";           
-            if (members[i][10] !== ""&& members[i][10] !== null) {
+            newcontent += "<li><a href='" + members[i][2] + "' target='_blank'><font size='3px;'>" + members[i][1] + "</font></a>";
+            if (members[i][10] !== "" && members[i][10] !== null) {
                 newcontent += "<i class='inspect' onclick=window.open('" + members[i][10] + "','_blank')></i>";
             }
             if (members[i][11] !== "" && members[i][11] !== null) {
                 newcontent += "<i class='problem' onclick=window.open('" + members[i][11] + "','_blank')></i>";
+            }
+            if (members[i][12] !== "" && members[i][12] !== null) {
+                newcontent += "<i class='verify' onclick=window.open('" + members[i][12] + "','_blank')></i>";
             }
             newcontent += "</li>";
         }
@@ -264,12 +274,15 @@ $json_names = json_encode($names);
         var newcontent = '';
         for (var i = page_index * items_per_page; i < max_elem; i++)
         {
-            newcontent += "<li><a href='"+ members1[i][2] + "'  target='_blank'><font size='3px;'>" + members1[i][1] + "</font></a>";
-            if (members1[i][10] !== ""&& members1[i][10] !== null) {
+            newcontent += "<li><a href='" + members1[i][2] + "'  target='_blank'><font size='3px;'>" + members1[i][1] + "</font></a>";
+            if (members1[i][10] !== "" && members1[i][10] !== null) {
                 newcontent += "<i class='inspect' onclick=window.open('" + members1[i][10] + "','_blank')></i>";
             }
             if (members1[i][11] !== "" && members1[i][11] !== null) {
                 newcontent += "<i class='problem' onclick=window.open('" + members1[i][11] + "','_blank')></i>";
+            }
+            if (members1[i][12] !== "" && members1[i][12] !== null) {
+                newcontent += "<i class='verify' onclick=window.open('" + members[i][12] + "','_blank')></i>";
             }
             newcontent += "</li>";
         }
@@ -283,12 +296,15 @@ $json_names = json_encode($names);
         var newcontent = '';
         for (var i = page_index * items_per_page; i < max_elem; i++)
         {
-            newcontent += "<li><a href='"+ members2[i][2] + "'  target='_blank'><font size='3px;'>" + members2[i][1] + "</font></a>";
-            if (members2[i][10] !== ""&& members2[i][10] !== null) {
+            newcontent += "<li><a href='" + members2[i][2] + "'  target='_blank'><font size='3px;'>" + members2[i][1] + "</font></a>";
+            if (members2[i][10] !== "" && members2[i][10] !== null) {
                 newcontent += "<i class='inspect' onclick=window.open('" + members2[i][10] + "','_blank')></i>";
             }
             if (members2[i][11] !== "" && members2[i][11] !== null) {
                 newcontent += "<i class='problem' onclick=window.open('" + members2[i][11] + "','_blank')></i>";
+            }
+            if (members2[i][12] !== "" && members2[i][12] !== null) {
+                newcontent += "<i class='verify' onclick=window.open('" + members[i][12] + "','_blank')></i>";
             }
             newcontent += "</li>";
         }
@@ -301,12 +317,15 @@ $json_names = json_encode($names);
         var newcontent = '';
         for (var i = page_index * items_per_page; i < max_elem; i++)
         {
-            newcontent += "<li><a href='"+ members3[i][2] + "'  target='_blank'><font size='3px;'>" + members3[i][1] + "</font></a>";
-            if (members3[i][10] !== ""&& members3[i][10] !== null) {
+            newcontent += "<li><a href='" + members3[i][2] + "'  target='_blank'><font size='3px;'>" + members3[i][1] + "</font></a>";
+            if (members3[i][10] !== "" && members3[i][10] !== null) {
                 newcontent += "<i class='inspect' onclick=window.open('" + members3[i][10] + "','_blank')></i>";
             }
             if (members3[i][11] !== "" && members3[i][11] !== null) {
                 newcontent += "<i class='problem' onclick=window.open('" + members3[i][11] + "','_blank')></i>";
+            }
+            if (members3[i][12] !== "" && members3[i][12] !== null) {
+                newcontent += "<i class='verify' onclick=window.open('" + members[i][12] + "','_blank')></i>";
             }
             newcontent += "</li>";
         }
@@ -320,12 +339,15 @@ $json_names = json_encode($names);
         var newcontent = '';
         for (var i = page_index * items_per_page; i < max_elem; i++)
         {
-            newcontent += "<li><a href='"+ members4[i][2] + "'  target='_blank'><font size='3px;'>" + members4[i][1] + "</font></a>";
-            if (members4[i][10] !== ""&& members4[i][10] !== null) {
+            newcontent += "<li><a href='" + members4[i][2] + "'  target='_blank'><font size='3px;'>" + members4[i][1] + "</font></a>";
+            if (members4[i][10] !== "" && members4[i][10] !== null) {
                 newcontent += "<i class='inspect' onclick=window.open('" + members4[i][10] + "','_blank')></i>";
             }
             if (members4[i][11] !== "" && members4[i][11] !== null) {
                 newcontent += "<i class='problem' onclick=window.open('" + members4[i][11] + "','_blank')></i>";
+            }
+            if (members4[i][12] !== "" && members4[i][12] !== null) {
+                newcontent += "<i class='verify' onclick=window.open('" + members[i][12] + "','_blank')></i>";
             }
             newcontent += "</li>";
         }
@@ -340,11 +362,14 @@ $json_names = json_encode($names);
         for (var i = page_index * items_per_page; i < max_elem; i++)
         {
             newcontent += "<li><a> <font size='3px;'>" + members5[i][1] + "</font></a>";
-            if (members5[i][10] !== ""&& members5[i][10] !== null) {
+            if (members5[i][10] !== "" && members5[i][10] !== null) {
                 newcontent += "<i class='inspect' onclick=window.open('" + members5[i][10] + "','_blank')></i>";
             }
             if (members5[i][11] !== "" && members5[i][11] !== null) {
                 newcontent += "<i class='problem' onclick=window.open('" + members5[i][11] + "','_blank')></i>";
+            }
+            if (members5[i][12] !== "" && members5[i][12] !== null) {
+                newcontent += "<i class='verify' onclick=window.open('" + members[i][12] + "','_blank')></i>";
             }
             newcontent += "</li>";
         }
@@ -458,7 +483,7 @@ $json_names = json_encode($names);
         if (key !== "") {
             window.location.href = "index.php?key=" + key;
         } else {
-           window.location.href = "index.php";
+            window.location.href = "index.php";
         }
     });
 

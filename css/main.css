@@ -123,9 +123,10 @@ img{border:none;vertical-align:top}
 .subcloumn li{float:left;margin-right:15px;line-height:26px}
 .subcloumn li a{color:#a2a2a2}
 .subcloumn li a:hover{color:#333}
+.verify{background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -641px; width: 15px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
 .problem{background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -753px; width: 20px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
-.inspect {background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -590px; width: 20px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
-.kc3 {background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -835px; width: 20px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
+.inspect {background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -590px; width: 15px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
+.kc3 {background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -835px; width: 15px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
 .doing{display: none}
 #admin_login{width: 998px; margin: 0 auto; font-size: 16px;height: 30px;}
 #admin_login span{float: left;}
