@@ -14,7 +14,8 @@ if ($initial != '') {
 if ($key != '') {
     $sql.= " and  name like '%$key%'";
 }
-
+$sql.=" order by problem_time asc,id asc";
+$dh_list_all=array();
 $dh_list = array();
 $dh_list1 = array();
 $dh_list2 = array();
@@ -23,9 +24,9 @@ $dh_list4 = array();
 $dh_list5 = array();
 $result = mysql_query($sql, $conn);
 while ($row = mysql_fetch_array($result)) {
-    $dh_list[] = $row;
+    $dh_list_all[] = $row;
 }
-foreach ($dh_list as $v) {
+foreach ($dh_list_all as $v) {
     switch ($v['level']) {
         case 1:
             $dh_list1[] = $v;
@@ -42,6 +43,9 @@ foreach ($dh_list as $v) {
         default:
             $dh_list5[] = $v;
     }
+    if($v['level']!=5){
+        $dh_list[]=$v;
+    }    
 }
 
 $json_string = json_encode($dh_list);
@@ -78,6 +82,19 @@ $json_names = json_encode($names);
 </div>
 <div class="w1000 mt10">
     <div class="ptlisttitle left">网贷平台导航</div>
+    <div class="login"><a href="submit.php">申请加入导航</a></div>
+
+    <ul class="left subcloumn">
+        <li><a href="http://www.wdzx.com/about.php?mod=contact">实地考察</a></li>
+        <li><a href="http://www.wdzx.com/about.php?mod=contact">视频采访</a></li>
+        <li><a href="http://www.wdzx.com/about.php?mod=contact">网贷培训</a></li>
+        <li><a href="http://www.wdzx.com/about.php?mod=contact">广告合作</a></li>      
+        <li><a href="http://qq.ip138.com/idsearch/" target="_blank">身份证查询</a></li>
+        <li><a href="http://www.beianbeian.com/" target="_blank">ICP备案查询</a></li>
+        <li><a href="http://www.nacao.org.cn/" target="_blank">组织机构代码查询</a></li>
+        <li><a href="http://shixin.court.gov.cn/" target="_blank">老赖黑名单查询</a></li>
+        <li><a href="http://gsxt.saic.gov.cn/" target="_blank">工商信息查询</a></li>
+    </ul>
     <div class="search_box">
         <label id="kw">关键字：</label>      
         <input id="keywords" type="text" placeholder="请输入平台名称" value="<?php
@@ -85,34 +102,21 @@ $json_names = json_encode($names);
             echo $key;
         }
         ?>" >
-        <input type="submit" value="" class="search_ico" />       
+        <input type="button" value="" class="search_ico" />       
     </div>
-    <ul class="left subcloumn">
-        <li><a href="#">实地考察</a></li>
-        <li><a href="#">视频采访</a></li>
-        <li><a href="#">网贷培训</a></li>
-        <li><a href="#">广告合作</a></li>
-        <li><a href="#">银行大全</a></li> 
-        <li><a href="http://qq.ip138.com/idsearch/" target="_blank">身份证查询</a></li>
-        <li><a href="http://www.beianbeian.com/" target="_blank">ICP备案查询</a></li>
-        <li><a href="http://www.nacao.org.cn/" target="_blank">组织机构代码查询</a></li>
-        <li><a href="http://shixin.court.gov.cn/" target="_blank">老赖黑名单查询</a></li>
-        <li><a href="http://gsxt.saic.gov.cn/" target="_blank">工商信息查询</a></li>
-    </ul>
-    <div class="login right"><a href="submit.php">申请加入导航</a></div>
     <div class="clear"></div>
 </div>
 <div class="tt2">
     <div class="column">
-            <?php $province_list = db_fetch_arrays("SELECT province,COUNT(*) AS total FROM wdzx_navigation_links GROUP BY province ORDER BY total DESC;", $conn); ?>
-        <div class="left cllist"><span>地区分类：</span>&nbsp;
+        <?php $province_list = db_fetch_arrays("SELECT province,COUNT(*) AS total FROM wdzx_navigation_links GROUP BY province ORDER BY total DESC;", $conn); ?>
+        <div class="left cllist"><span>地区分类：</span>
             <a href="?initial=<?php
             echo $initial;
             if ($key != "") {
                 echo "&key=" . $key;
             }
             ?>" <?php if ($province == "") { ?>class="current"<?php } ?>>全部</a>
-            <?php foreach ($province_list as $value) { ?>
+               <?php foreach ($province_list as $value) { ?>
                 <a href="?province=<?php echo $value["province"]; ?><?php
                 if ($initial != "") {
                     echo "&initial=" . $initial;
@@ -120,12 +124,12 @@ $json_names = json_encode($names);
                     echo "&key=" . $key;
                 }
                 ?>" <?php if ($province == $value["province"]) { ?>class="current"<?php } ?>><?php echo $value["province"]; ?>(<?php echo $value["total"]; ?>)</a>
-<?php } ?>
+               <?php } ?>
         </div>
         <div class="clear"></div>
 
         <div class="clline"></div>
-        <div class="cllist2"><span>字母查找：</span>&nbsp;
+        <div class="cllist2"><span>字母查找：</span>
             <a href="?province=<?php
             echo $province;
             if ($key != "") {
@@ -141,13 +145,19 @@ $json_names = json_encode($names);
                     echo "&key=" . $key;
                 }
                 ?>" <?php if ($initial == $s) { ?>class="current"<?php } ?>><?php echo $s; ?></a>
-<?php } ?>
+               <?php } ?>
             <div class="cler"></div>
             <div class="clear"></div>
         </div>
 
     </div>
     <div class="content">
+        <div id="noic">
+            提示：
+            <img src="images/verify.png">:已入驻网贷中心平台
+            <img src="images/inspect.png">:已考察平台
+            <img src="images/problem.png">:问题平台
+        </div>
         <ul class="left tbalist" style="position:relative;">
             <li onmousemove="level_show(0)"><a href="#" class="current" id="type_0">所有平台</a></li>
             <li onmousemove="level_show(1)"><a href="#" id="type_1">活跃平台</a></li>
@@ -155,7 +165,7 @@ $json_names = json_encode($names);
             <li onmousemove="level_show(3)"><a href="#" id="type_3">成长平台</a></li>
             <li onmousemove="level_show(4)"><a href="#" id="type_4">新平台</a></li>
             <li onmousemove="level_show(5)"><a href="#" id="type_5">问题平台</a></li>
-                <!--<span style="position:absolute ;top:285px;left:30px;font-size:12px;color:red;">个</span>--><?php //echo $row[0];                                    ?>
+                <!--<span style="position:absolute ;top:285px;left:30px;font-size:12px;color:red;">个</span>--><?php //echo $row[0];                                      ?>
         </ul>
         <div class="left conlist" id="level_0">
             <div class="clear"></div>
@@ -282,7 +292,7 @@ $json_names = json_encode($names);
                 newcontent += "<i class='problem' onclick=window.open('" + members1[i][11] + "','_blank')></i>";
             }
             if (members1[i][12] !== "" && members1[i][12] !== null) {
-                newcontent += "<i class='verify' onclick=window.open('" + members[i][12] + "','_blank')></i>";
+                newcontent += "<i class='verify' onclick=window.open('" + members1[i][12] + "','_blank')></i>";
             }
             newcontent += "</li>";
         }
@@ -304,7 +314,7 @@ $json_names = json_encode($names);
                 newcontent += "<i class='problem' onclick=window.open('" + members2[i][11] + "','_blank')></i>";
             }
             if (members2[i][12] !== "" && members2[i][12] !== null) {
-                newcontent += "<i class='verify' onclick=window.open('" + members[i][12] + "','_blank')></i>";
+                newcontent += "<i class='verify' onclick=window.open('" + members2[i][12] + "','_blank')></i>";
             }
             newcontent += "</li>";
         }
@@ -325,7 +335,7 @@ $json_names = json_encode($names);
                 newcontent += "<i class='problem' onclick=window.open('" + members3[i][11] + "','_blank')></i>";
             }
             if (members3[i][12] !== "" && members3[i][12] !== null) {
-                newcontent += "<i class='verify' onclick=window.open('" + members[i][12] + "','_blank')></i>";
+                newcontent += "<i class='verify' onclick=window.open('" + members3[i][12] + "','_blank')></i>";
             }
             newcontent += "</li>";
         }
@@ -347,7 +357,7 @@ $json_names = json_encode($names);
                 newcontent += "<i class='problem' onclick=window.open('" + members4[i][11] + "','_blank')></i>";
             }
             if (members4[i][12] !== "" && members4[i][12] !== null) {
-                newcontent += "<i class='verify' onclick=window.open('" + members[i][12] + "','_blank')></i>";
+                newcontent += "<i class='verify' onclick=window.open('" + members4[i][12] + "','_blank')></i>";
             }
             newcontent += "</li>";
         }
@@ -369,7 +379,7 @@ $json_names = json_encode($names);
                 newcontent += "<i class='problem' onclick=window.open('" + members5[i][11] + "','_blank')></i>";
             }
             if (members5[i][12] !== "" && members5[i][12] !== null) {
-                newcontent += "<i class='verify' onclick=window.open('" + members[i][12] + "','_blank')></i>";
+                newcontent += "<i class='verify' onclick=window.open('" + members5[i][12] + "','_blank')></i>";
             }
             newcontent += "</li>";
         }

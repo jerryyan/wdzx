@@ -1,7 +1,7 @@
 <?php
 
 include '../db.php';
-if (isset($_POST['do']) && $_POST['do'] == "ischeck") {
+if (isset($_POST['doing']) && $_POST['doing'] == "ischeck") {
     if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $id = $_POST["id"];
         mysql_query("update wdzx_navigation_submit set fstatus=1 where id=$id");

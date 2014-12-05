@@ -5,7 +5,7 @@ body{background:#fbfbfb;margin:0;padding:0;font-size:12px;font-family:"宋体"}
 h1,h2,h3,h4,h5,h6,ul,li,a,p,span,dl,dd,dt,input{margin:0;padding:0;text-decoration:none;list-style:none}
 img{border:none;vertical-align:top}
 .left{float:left}
-.right{float:right;margin-right: 10px;margin-top: 10px;}
+.right{float:right;}
 .clear{clear:both;font-size:0;height:0}
 .w1000{width:1000px;margin:0 auto}
 .mt10{margin-top:10px}
@@ -62,12 +62,12 @@ img{border:none;vertical-align:top}
 .ptmc li a{color:#333}
 .ptls{}
 
-.ptlisttitle{font-size:18px;font-family:"微软雅黑"}
+.ptlisttitle{font-size:18px;font-family:"微软雅黑";margin-top:10px;}
+.login{float: left;margin-left: 30px;margin-top: 10px;}
 .login a{width:86px;height:26px;line-height:26px;text-align:center;display:block;color:#fff;background:#990000}
 .column{padding:10px;border-bottom:1px solid #cecece}
-.cllist{width:1030px}
-.cllist span,.cllist2 span{color:#a4a4a4}
-.cllist a{margin-right:27px;color:#333;line-height:26px;height:26px;display:inline-block;padding:0 5px}
+.cllist span,.cllist2 span{color:#a4a4a4;font-size: 14px;}
+.cllist a{margin-right:23px;color:#333;line-height:26px;height:26px;display:inline-block;padding:0 5px}
 .cllist a:hover{background:#35b6e0;color:#fff}
 .cllist a.current{background:#35b6e0;color:#fff}
 .zk a{width:46px;height:26px;text-align:center;background:#35b6e0;color:#fff;display:block;line-height:26px}
@@ -119,14 +119,16 @@ img{border:none;vertical-align:top}
 .zs{width:330px;line-height:40px;font-size:14px;font-family:"微软雅黑";color:#797979}
 .zs span{color:#990000}
 
-.subcloumn{width: 450px;}
+.subcloumn{width: 420px;margin-left: 30px;}
 .subcloumn li{float:left;margin-right:15px;line-height:26px}
-.subcloumn li a{color:#a2a2a2}
+.subcloumn li a{color:rgb(84, 83, 83)}
 .subcloumn li a:hover{color:#333}
-.verify{background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -641px; width: 15px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
-.problem{background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -753px; width: 20px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
-.inspect {background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -590px; width: 15px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
+.verify{background: url(../images/verify.png) no-repeat left top; width: 15px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
+.problem{background: url(../images/problem.png) no-repeat left top; width: 15px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
+.inspect {background: url(../images/inspect.png) no-repeat left top; width: 15px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
 .kc3 {background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -835px; width: 15px; height: 15px;vertical-align: text-bottom;cursor: pointer;display:inline-block; }
+.kc3_ii {background: url(../images/icon_v1.png) no-repeat left top;background-position: 4px -835px; width: 15px; height: 15px;vertical-align: text-bottom;display:inline-block; }
+#noic{margin-left: 80px;margin-top: 10px;}
 .doing{display: none}
 #admin_login{width: 998px; margin: 0 auto; font-size: 16px;height: 30px;}
 #admin_login span{float: left;}
@@ -174,36 +176,41 @@ img{border:none;vertical-align:top}
 #search_form{display: inline-block;}
 
 .search_ico {
-height: 32px;
-width: 40px;
-border: 1px solid #E3E4E8;
-border-left: 0;
-cursor: pointer;
-background: url(../images/icon_v1.png) 10px -529px no-repeat #fff;
-vertical-align: middle;
+    height: 32px;
+    width: 40px;
+    border: 1px solid #E3E4E8;
+    border-left: 0;
+    cursor: pointer;
+    background: url(../images/icon_v1.png) 10px -529px no-repeat #fff;
+    vertical-align: middle;
 }
 
 #keywords {
-height: 30px;
-width: 185px;
-margin-right: -39px;
-line-height: 30px;
-border: 1px solid #E3E4E8;
-border-right: 0;
-padding-left: 10px;
-vertical-align: middle;
+    height: 30px;
+    width: 185px;
+    margin-right: -39px;    
+    line-height: 29px;
+    border: 1px solid #E3E4E8;
+    border-right: 0;
+    padding-left: 10px;
+    vertical-align: middle;
 }
 #kw{
     color: red;
     font-size:14px;
 }
 
-  .ui-autocomplete {
+.ui-autocomplete {
     max-height: 100px;
     overflow-y: auto;
     /* prevent horizontal scrollbar */
     overflow-x: hidden;
-  }
-  * html .ui-autocomplete {
+}
+* html .ui-autocomplete {
     height: 200px;
-  }
+}
+#p_sea{
+    width: 980px;
+    margin: 0 auto;
+    padding:10px;
+}

@@ -52,15 +52,22 @@ $dh_list = db_fetch_arrays($sql, $conn);
             <div class="clear"></div>
         </div>
         <a href="admin_add.php">加入导航</a>
+
+    </div>
+    <div id="noic">
+        提示：点击名称：修改平台信息
+        <img src="../images/verify.png">:入驻网贷中心平台地址操作
+        <img src="../images/inspect.png">:平台考擦地址操作
+        <i class="kc3_ii"></i>:删除平台
     </div>
     <div class="content">
         <ul class="left tbalist">
-            <li onmousemove="level_show(0)"><a href="#" class="current" id="type_0">所有平台</a></li>
-            <li onmousemove="level_show(1)"><a href="#" id="type_1">活跃平台</a></li>
-            <li onmousemove="level_show(2)"><a href="#" id="type_2">人气平台</a></li>
-            <li onmousemove="level_show(3)"><a href="#" id="type_3">成长平台</a></li>
-            <li onmousemove="level_show(4)"><a href="#" id="type_4">新平台</a></li>
-            <li onmousemove="level_show(5)"><a href="#" id="type_5">问题平台</a></li>
+            <li class="pingtai" id="0"><a href="#" class="current" id="type_0">所有平台</a></li>
+            <li class="pingtai" id="1"><a href="#" id="type_1">活跃平台</a></li>
+            <li class="pingtai" id="2"><a href="#" id="type_2">人气平台</a></li>
+            <li class="pingtai" id="3"><a href="#" id="type_3">成长平台</a></li>
+            <li class="pingtai" id="4"><a href="#" id="type_4">新平台</a></li>
+            <li class="pingtai" id="5"><a href="#" id="type_5">问题平台</a></li>
         </ul>
         <div class="left conlist" id="level_0">
             <div class="clear"></div>
@@ -82,7 +89,7 @@ $dh_list = db_fetch_arrays($sql, $conn);
                         continue;
                     }
                     ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="inspect" id="<?php echo $dh['id'] . "#" . $dh['inspect']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="verify" id="<?php echo $dh['id'] . "#" . $dh['verify']; ?>"></i>  <i class="inspect" id="<?php echo $dh['id'] . "#" . $dh['inspect']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
                 <?php } ?>
             </ul>
             <div class="clear"></div>
@@ -96,7 +103,7 @@ $dh_list = db_fetch_arrays($sql, $conn);
                         continue;
                     }
                     ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a><span class='doing'> <i class="inspect" id="<?php echo $dh['id'] . "#" . $dh['inspect']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a><span class='doing'> <i class="verify" id="<?php echo $dh['id'] . "#" . $dh['verify']; ?>"></i>  <i class="inspect" id="<?php echo $dh['id'] . "#" . $dh['inspect']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
                 <?php } ?>
             </ul>
             <div class="clear"></div>
@@ -110,7 +117,7 @@ $dh_list = db_fetch_arrays($sql, $conn);
                         continue;
                     }
                     ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="inspect" id="<?php echo $dh['id'] . "#" . $dh['inspect']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'>  <i class="verify" id="<?php echo $dh['id'] . "#" . $dh['verify']; ?>"></i> <i class="inspect" id="<?php echo $dh['id'] . "#" . $dh['inspect']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
                 <?php } ?>
             </ul>
             <div class="clear"></div>
@@ -124,7 +131,7 @@ $dh_list = db_fetch_arrays($sql, $conn);
                         continue;
                     }
                     ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="inspect" id="<?php echo $dh['id'] . "#" . $dh['inspect']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'>  <i class="verify" id="<?php echo $dh['id'] . "#" . $dh['verify']; ?>"></i> <i class="inspect" id="<?php echo $dh['id'] . "#" . $dh['inspect']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
                 <?php } ?>
             </ul>
             <div class="clear"></div>
@@ -139,7 +146,7 @@ $dh_list = db_fetch_arrays($sql, $conn);
                         continue;
                     }
                     ?>
-                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="inspect" id="<?php echo $dh['id'] . "#" . $dh['inspect']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
+                    <li><a href="admin_edit.php?id=<?php echo $dh['id']; ?>" target="_blank"><font size="3px;"><?php echo $dh['name']; ?></font></a> <span class='doing'> <i class="verify" id="<?php echo $dh['id'] . "#" . $dh['verify']; ?>"></i>  <i class="inspect" id="<?php echo $dh['id'] . "#" . $dh['inspect']; ?>"></i><i class="kc3" id="<?php echo $dh['id']; ?>"></i></span></li>
                 <?php } ?>
             </ul>
             <div class="clear"></div>
@@ -149,7 +156,9 @@ $dh_list = db_fetch_arrays($sql, $conn);
     </div>
 </div>
 <script type="text/javascript">
-    function level_show(id) {
+
+    $(".pingtai").mousemove(function () {
+        var id = $(this).attr("id");
         for (var i = 0; i < 6; i++) {
             $("#level_" + i).hide();
             $("#type_" + i).attr("class", "");
@@ -157,8 +166,8 @@ $dh_list = db_fetch_arrays($sql, $conn);
 
         $("#level_" + id).show();
         $("#type_" + id).attr("class", "current");
-    }
 
+    });
 
     $(".conlisttext").children('li').mouseover(function () {
         $(this).children('.doing').css("display", "inline-block");
@@ -182,17 +191,18 @@ $dh_list = db_fetch_arrays($sql, $conn);
             buttons: {
                 "确定": function () {
                     var newaddress = $("#inaddress").val();
+                    var data="id="+strs[0]+"&do=inspect&address="+newaddress;
                     $.ajax({
                         type: "post",
                         url: 'admin_dbdo.php',
                         dataType: "json",
-                        data: {id: strs[0], do: 'inspect', address: newaddress},
+                        data: data,
                         success: function (msg) {
                             if (msg === 1) {
                                 alert("操作成功");
                                 location.reload();
                             } else {
-                                alert("操作成功，请联系管理员！");
+                                alert("操作失败，请联系管理员！");
                             }
                         }
                     });
@@ -221,17 +231,18 @@ $dh_list = db_fetch_arrays($sql, $conn);
             buttons: {
                 "确定": function () {
                     var newaddress = $("#verifyaddress").val();
+                     var data="id="+strs[0]+"&do=verify&address="+newaddress;
                     $.ajax({
                         type: "post",
                         url: 'admin_dbdo.php',
                         dataType: "json",
-                        data: {id: strs[0], do: 'verify', address: newaddress},
+                        data:data,
                         success: function (msg) {
                             if (msg === 1) {
                                 alert("操作成功");
                                 location.reload();
                             } else {
-                                alert("操作成功，请联系管理员！");
+                                alert("操作失败，请联系管理员！");
                             }
                         }
                     });
@@ -257,7 +268,7 @@ $dh_list = db_fetch_arrays($sql, $conn);
                         type: "post",
                         url: 'admin_del.php',
                         dataType: "json",
-                        data: {id: data, del: 'list'},
+                        data: {id: data,del: 'list'},
                         success: function (msg) {
                             if (msg === 1) {
                                 alert("删除成功");

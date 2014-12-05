@@ -25,7 +25,7 @@ if (is_numeric($page)) {
 <div id="dialog-confirm" title="删除该记录？" style="display: none;">
     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>您确认删除该记录?</p>
 </div>
-<table align="center" border="1" >
+<table align="center" border="1" style="min-width:1000px;border-collapse:collapse;" cellpadding="3" cellspacing="0" >
     <tr>
         <th>名称</th>
         <th>网址</th>
@@ -80,12 +80,13 @@ if (is_numeric($page)) {
             type: "post",
             url: 'admin_dbdo.php',
             dataType: "json",
-            data: {id: data, do: 'ischeck'},
+            data: {id: data, doing: 'ischeck'},
             success: function (msg) {
                 if (msg === 1) { 
+                    alert("审核成功！");
                   window.location.href="admin_submit_list.php?page=<?php echo $page; ?>";
                 } else {
-                    alert("审核，请联系管理员！");
+                    alert("审核失败，请联系管理员！");
                 }
             }
         });

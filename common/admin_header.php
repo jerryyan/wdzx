@@ -8,7 +8,7 @@
         <meta name="description" content="网贷平台排名 p2p平台排名 p2p导航 网贷平台哪个好 网贷平台导航 网贷平台评级" />
         <link rel="stylesheet" type="text/css" href="../css/main.css"/>
         <link rel="stylesheet" type="text/css" href="../js/jquery-ui-1.11.2/jquery-ui.min.css"/>
-        <script src="../js/jquery-2.1.1.js"></script>
+        <script src="../js/jquery-1.8.3.min.js"></script>
         <script src="../js/jquery-ui-1.11.2/jquery-ui.min.js"></script>
         <script type="text/javascript">
             // 设置为主页

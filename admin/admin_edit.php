@@ -13,13 +13,17 @@ empty($_REQUEST["initial"]) ? $initial = "" : $initial = $_REQUEST["initial"];
 empty($_REQUEST["level"]) ? $level = "" : $level = $_REQUEST["level"];
 empty($_REQUEST["province"]) ? $province = "" : $province = $_REQUEST["province"];
 empty($_REQUEST["is_hot"]) ? $is_hot = 0 : $is_hot = $_REQUEST["is_hot"];
-
+$time = date("Y-m-d H:i:s");
 if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != '') {
     $is_name = db_fetch_array("SELECT name FROM wdzx_navigation_links where id!={$id} and name='$name';", $conn);
     if (!empty($is_name)) {
         echo "<script>alert('网站名称已存在，请重新填写');widndow.location.href;</script>";
     } else {
-        mysql_query("update wdzx_navigation_links set name='$name',url='$url',initial='$initial',level=$level,province='$province',is_hot=$is_hot where id=$id", $conn);
+        if ($level != 5) {
+            mysql_query("update wdzx_navigation_links set name='$name',url='$url',initial='$initial',level=$level,province='$province',is_hot=$is_hot, where id=$id", $conn);
+        } else {
+            mysql_query("update wdzx_navigation_links set name='$name',url='$url',initial='$initial',level=$level,province='$province',problem_time='$time' where id=$id", $conn);
+        }
         echo "<script>alert('修改成功');window.location.href='admin_list.php';</script>";
     }
 }
@@ -63,8 +67,12 @@ if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != 
                     <td width="109" class="tbtitle"><span>*</span>是否推荐：</td>
                     <td width="401">
                         <select id="is_hot" name="is_hot">
-                            <option value="0" <?php if($pt['is_hot']==0){echo 'selected'; }?>>不推荐</option>
-                            <option value="1" <?php if($pt['is_hot']==1){echo 'selected'; }?>>推荐</option>
+                            <option value="0" <?php if ($pt['is_hot'] == 0) {
+    echo 'selected';
+} ?>>不推荐</option>
+                            <option value="1" <?php if ($pt['is_hot'] == 1) {
+    echo 'selected';
+} ?>>推荐</option>
                         </select>
                     </td>
                 </tr>
@@ -77,11 +85,11 @@ if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != 
                     <td width="109" class="tbtitle"><span>*</span>级别：</td>
                     <td width="401">
                         <select id="level" name="level">
-                            <option value="1">活跃平台</option>
-                            <option value="2">人气平台</option>
-                            <option value="3">成长平台</option>
-                            <option value="4">新平台</option>
-                            <option value="5">问题平台</option>
+                            <option value="1" <?php if($pt['level']==1){ echo "selected='selected'"; } ?>>活跃平台</option>
+                            <option value="2" <?php if($pt['level']==2){ echo "selected='selected'"; } ?>>人气平台</option>
+                            <option value="3" <?php if($pt['level']==3){ echo "selected='selected'"; } ?>>成长平台</option>
+                            <option value="4" <?php if($pt['level']==4){ echo "selected='selected'"; } ?>>新平台</option>
+                            <option value="5" <?php if($pt['level']==5){ echo "selected='selected'"; } ?>>问题平台</option>
                         </select>
                     </td>
                 </tr>
