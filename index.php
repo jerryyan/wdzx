@@ -15,7 +15,7 @@ if ($key != '') {
     $sql.= " and  name like '%$key%'";
 }
 $sql.=" order by problem_time asc,id asc";
-$dh_list_all=array();
+$dh_list_all = array();
 $dh_list = array();
 $dh_list1 = array();
 $dh_list2 = array();
@@ -43,9 +43,9 @@ foreach ($dh_list_all as $v) {
         default:
             $dh_list5[] = $v;
     }
-    if($v['level']!=5){
-        $dh_list[]=$v;
-    }    
+    if ($key != '' || $v['level'] != 5) {
+        $dh_list[] = $v;
+    }
 }
 
 $json_string = json_encode($dh_list);
@@ -165,7 +165,7 @@ $json_names = json_encode($names);
             <li onmousemove="level_show(3)"><a href="#" id="type_3">成长平台</a></li>
             <li onmousemove="level_show(4)"><a href="#" id="type_4">新平台</a></li>
             <li onmousemove="level_show(5)"><a href="#" id="type_5">问题平台</a></li>
-                <!--<span style="position:absolute ;top:285px;left:30px;font-size:12px;color:red;">个</span>--><?php //echo $row[0];                                      ?>
+                <!--<span style="position:absolute ;top:285px;left:30px;font-size:12px;color:red;">个</span>--><?php //echo $row[0];                                        ?>
         </ul>
         <div class="left conlist" id="level_0">
             <div class="clear"></div>
@@ -263,7 +263,11 @@ $json_names = json_encode($names);
         var newcontent = '';
         for (var i = page_index * items_per_page; i < max_elem; i++)
         {
-            newcontent += "<li><a href='" + members[i][2] + "' target='_blank'><font size='3px;'>" + members[i][1] + "</font></a>";
+            if (members[i][11] !== "" && members[i][11] !== null) {
+                newcontent += "<li><a style='color:red;'><font size='3px;'>" + members[i][1] + "</font></a>";
+            } else {
+                newcontent += "<li><a href='" + members[i][2] + "' target='_blank'><font size='3px;'>" + members[i][1] + "</font></a>";
+            }
             if (members[i][10] !== "" && members[i][10] !== null) {
                 newcontent += "<i class='inspect' onclick=window.open('" + members[i][10] + "','_blank')></i>";
             }

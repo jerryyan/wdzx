@@ -5,13 +5,18 @@ empty($_REQUEST["url"]) ? $url = "" : $url = $_REQUEST["url"];
 empty($_REQUEST["initial"]) ? $initial = "" : $initial = $_REQUEST["initial"];
 empty($_REQUEST["level"]) ? $level = "" : $level = $_REQUEST["level"];
 empty($_REQUEST["province"]) ? $province = "" : $province = $_REQUEST["province"];
-
+$time = date("Y-m-d H:i:s");
 if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != '') {
     $is_name = db_fetch_array("SELECT name FROM wdzx_navigation_links where name='$name';", $conn);
     if (!empty($is_name)) {
         echo "<script>alert('网站名称已存在，请重新填写');widndow.location.href='';</script>";
     } else {
         mysql_query("insert into wdzx_navigation_links(name,url,initial,level,province) value('$name','$url','$initial',$level,'$province');", $conn);
+          if ($level != 5) {
+            mysql_query("insert into wdzx_navigation_links(name,url,initial,level,province) value('$name','$url','$initial',$level,'$province');", $conn);
+        } else {
+            mysql_query("insert into wdzx_navigation_links(name,url,initial,level,province,'problem_time') value('$name','$url','$initial',$level,'$province','$time');", $conn);
+        }
         echo "<script>alert('添加成功');window.location.href='admin_list.php';</script>";
     }
 }
