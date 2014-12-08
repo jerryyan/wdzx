@@ -154,8 +154,8 @@ $json_names = json_encode($names);
     <div class="content">
         <div id="noic">
             提示：
-            <img src="images/verify.png">:已入驻网贷中心平台
-            <img src="images/inspect.png">:已考察平台
+            <img src="images/verify.png">:已入驻
+            <img src="images/inspect.png">:已考察
             <img src="images/problem.png">:问题平台
         </div>
         <ul class="left tbalist" style="position:relative;">
@@ -165,7 +165,7 @@ $json_names = json_encode($names);
             <li onmousemove="level_show(3)"><a href="#" id="type_3">成长平台</a></li>
             <li onmousemove="level_show(4)"><a href="#" id="type_4">新平台</a></li>
             <li onmousemove="level_show(5)"><a href="#" id="type_5">问题平台</a></li>
-                <!--<span style="position:absolute ;top:285px;left:30px;font-size:12px;color:red;">个</span>--><?php //echo $row[0];                                        ?>
+                <!--<span style="position:absolute ;top:285px;left:30px;font-size:12px;color:red;">个</span>--><?php //echo $row[0];                                          ?>
         </ul>
         <div class="left conlist" id="level_0">
             <div class="clear"></div>
@@ -220,7 +220,7 @@ $json_names = json_encode($names);
 
         <div class="left conlist" id="level_5" style="display:none;">
             <div class="clear"></div>       
-            <div class="clline"></div>
+            <div class="clline"></div>             
             <ul class="conlisttext" id="conlisttext_5">
             </ul>
             <div class="clear"></div>
@@ -263,7 +263,7 @@ $json_names = json_encode($names);
         var newcontent = '';
         for (var i = page_index * items_per_page; i < max_elem; i++)
         {
-            if (members[i][11] !== "" && members[i][11] !== null) {
+            if (members[i][8] === "5") {
                 newcontent += "<li><a style='color:red;'><font size='3px;'>" + members[i][1] + "</font></a>";
             } else {
                 newcontent += "<li><a href='" + members[i][2] + "' target='_blank'><font size='3px;'>" + members[i][1] + "</font></a>";
