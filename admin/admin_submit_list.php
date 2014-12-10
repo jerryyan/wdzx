@@ -46,7 +46,7 @@ if (is_numeric($page)) {
             <td><?php echo $row['year']; ?></td>
             <td><?php echo $row['logo_url']; ?></td>
             <td><?php echo $row['fstatus'] == 0 ? "<a style='cursor:pointer;' class='ischeck' id={$row['id']}>未审核</a>" : "已审核"; ?></td>
-            <td><a style="color:red;cursor:pointer;" class='del' id="<?php echo $row['id']; ?>" >删除</a></td>
+            <td><a href="admin_submit_edit.php?id=<?php echo $row['id']; ?>" >修改</a>&nbsp;&nbsp;<a style="color:red;cursor:pointer;" class='del' id="<?php echo $row['id']; ?>" >删除</a></td>
         </tr>
 
         <?php

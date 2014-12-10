@@ -20,7 +20,7 @@ if ($name != '' && $url != '' && $initial != '' && $level != '' && $province != 
         echo "<script>alert('网站名称已存在，请重新填写');widndow.location.href;</script>";
     } else {
         if ($level != 5) {
-            mysql_query("update wdzx_navigation_links set name='$name',url='$url',initial='$initial',level=$level,province='$province',is_hot=$is_hot, where id=$id", $conn);
+            mysql_query("update wdzx_navigation_links set name='$name',url='$url',initial='$initial',level=$level,province='$province',is_hot=$is_hot  where id=$id", $conn);
         } else {
             mysql_query("update wdzx_navigation_links set name='$name',url='$url',initial='$initial',level=$level,province='$province',problem_time='$time' where id=$id", $conn);
         }
