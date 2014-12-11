@@ -71,13 +71,12 @@ $subPages = new Page();
             modal: true,
             buttons: {
                 "确定": function () {
-                    var newaddress = $("#praddress").val();
-                    var data="id="+strs[0]+"&do=problem&address="+newaddress;
+                    var newaddress = $("#praddress").val();                  
                     $.ajax({
                         type: "post",
                         url: 'admin_dbdo.php',
                         dataType: "json",
-                        data: data,
+                          data: {id: strs[0], doing: 'problem',address:newaddress},
                         success: function (msg) {
                             if (msg === 1) {
                                 alert("操作成功");

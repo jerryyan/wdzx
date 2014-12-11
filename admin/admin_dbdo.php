@@ -28,7 +28,7 @@ if (isset($_POST['doing']) && $_POST['doing'] == "ischeck") {
 }
 
 
-if (isset($_POST['do']) && $_POST['do'] == "inspect") {
+if (isset($_POST['doing']) && $_POST['doing'] == "inspect") {
     $id = $_POST['id'];
     $address = $_POST['address'];
     $sql = "update wdzx_navigation_links set inspect='$address' where id=$id";
@@ -37,7 +37,7 @@ if (isset($_POST['do']) && $_POST['do'] == "inspect") {
     exit();
 }
 
-if (isset($_POST['do']) && $_POST['do'] == "verify") {
+if (isset($_POST['doing']) && $_POST['doing'] == "verify") {
     $id = $_POST['id'];
     $address = $_POST['address'];
     $sql = "update wdzx_navigation_links set verify='$address' where id=$id";
@@ -46,7 +46,7 @@ if (isset($_POST['do']) && $_POST['do'] == "verify") {
     exit();
 }
 
-if (isset($_POST['do']) && $_POST['do'] == "problem") {
+if (isset($_POST['doing']) && $_POST['doing'] == "problem") {
     $id = $_POST['id'];
     $address = $_POST['address'];
     $sql = "update wdzx_navigation_links set problem='$address' where id=$id";

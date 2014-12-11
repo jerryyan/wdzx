@@ -190,13 +190,12 @@ $dh_list = db_fetch_arrays($sql, $conn);
             modal: true,
             buttons: {
                 "确定": function () {
-                    var newaddress = $("#inaddress").val();
-                    var data="id="+strs[0]+"&do=inspect&address="+newaddress;
+                    var newaddress = $("#inaddress").val();                  
                     $.ajax({
                         type: "post",
                         url: 'admin_dbdo.php',
                         dataType: "json",
-                        data: data,
+                         data: {id: strs[0], doing: 'inspect',address:newaddress},
                         success: function (msg) {
                             if (msg === 1) {
                                 alert("操作成功");
@@ -230,13 +229,12 @@ $dh_list = db_fetch_arrays($sql, $conn);
             modal: true,
             buttons: {
                 "确定": function () {
-                    var newaddress = $("#verifyaddress").val();
-                     var data="id="+strs[0]+"&do=verify&address="+newaddress;
+                    var newaddress = $("#verifyaddress").val();                   
                     $.ajax({
                         type: "post",
                         url: 'admin_dbdo.php',
                         dataType: "json",
-                        data:data,
+                         data: {id: strs[0], doing: 'verify',address:newaddress},
                         success: function (msg) {
                             if (msg === 1) {
                                 alert("操作成功");
