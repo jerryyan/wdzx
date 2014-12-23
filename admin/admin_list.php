@@ -2,7 +2,7 @@
 include '../common/admin_header.php';
 empty($_REQUEST["province"]) ? $province = "" : $province = $_REQUEST["province"];
 empty($_REQUEST["initial"]) ? $initial = "" : $initial = $_REQUEST["initial"];
-
+$key = isset($_GET['key']) && !empty($_GET['key']) ? trim($_GET['key']) : "";
 $szm = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
 $sql = "select * from wdzx_navigation_links  where 1=1 ";
 
@@ -12,7 +12,16 @@ if ($province != '') {
 if ($initial != '') {
     $sql .= " and initial='$initial'";
 }
+if ($key != '') {
+    $sql.= " and  name like '%$key%'";
+}
 $dh_list = db_fetch_arrays($sql, $conn);
+
+$resultnames = mysql_query("SELECT * FROM wdzx_navigation_links", $conn);
+while ($row = mysql_fetch_array($resultnames)) {
+    $names[] = $row['name'];
+}
+$json_names = json_encode($names);
 ?>
 
 
@@ -32,33 +41,63 @@ $dh_list = db_fetch_arrays($sql, $conn);
 <div class="tt2">
     <div class="column">
         <?php $province_list = db_fetch_arrays("SELECT province,COUNT(*) AS total FROM wdzx_navigation_links GROUP BY province ORDER BY total DESC;", $conn); ?>
-        <div class="left cllist"><span>地区分类：</span>&nbsp;
-            <a href="?initial=<?php echo $initial; ?>" <?php if ($province == "") { ?>class="current"<?php } ?>>全部</a>
-            <?php foreach ($province_list as $value) { ?>
-                <a href="?province=<?php echo $value["province"]; ?>&initial=<?php echo $initial; ?>" <?php if ($province == $value["province"]) { ?>class="current"<?php } ?>><?php echo $value["province"]; ?>(<?php echo $value["total"]; ?>)</a>
-            <?php } ?>
+        <div class="left cllist"><span>地区分类：</span>
+            <a href="?initial=<?php
+            echo $initial;
+            if ($key != "") {
+                echo "&key=" . $key;
+            }
+            ?>" <?php if ($province == "") { ?>class="current"<?php } ?>>全部</a>
+               <?php foreach ($province_list as $value) { ?>
+                <a href="?province=<?php echo $value["province"]; ?><?php
+                if ($initial != "") {
+                    echo "&initial=" . $initial;
+                }if ($key != "") {
+                    echo "&key=" . $key;
+                }
+                ?>" <?php if ($province == $value["province"]) { ?>class="current"<?php } ?>><?php echo $value["province"]; ?>(<?php echo $value["total"]; ?>)</a>
+               <?php } ?>
         </div>
         <div class="clear"></div>
 
         <div class="clline"></div>
-        <div class="cllist2"><span>字母查找：</span>&nbsp;
-            <a href="?province=<?php echo $province; ?>" <?php if ($initial == '') { ?>class="current"<?php } ?>>全</a>
+        <div class="cllist2"><span>字母查找：</span>
+            <a href="?province=<?php
+            echo $province;
+            if ($key != "") {
+                echo "&key=" . $key;
+            }
+            ?>" <?php if ($initial == '') { ?>class="current"<?php } ?>>全</a>
 
             <?php foreach ($szm as $s) { ?>
-                <a href="?initial=<?php echo $s; ?>&province=<?php echo $province; ?>" <?php if ($initial == $s) { ?>class="current"<?php } ?>><?php echo $s; ?></a>
-            <?php } ?>
+                <a href="?initial=<?php echo $s; ?><?php
+                if ($province != "") {
+                    echo "&province=" . $province;
+                }if ($key != "") {
+                    echo "&key=" . $key;
+                }
+                ?>" <?php if ($initial == $s) { ?>class="current"<?php } ?>><?php echo $s; ?></a>
+               <?php } ?>
             <div class="cler"></div>
-
             <div class="clear"></div>
         </div>
         <a href="admin_add.php">加入导航</a>
 
     </div>
-    <div id="noic">
+    <div id="noic" style="display:inline-block;float: left;">
         提示：点击名称：修改平台信息
         <img src="../images/verify.png">:入驻网贷中心平台地址操作
         <img src="../images/inspect.png">:平台考擦地址操作
         <i class="kc3_ii"></i>:删除平台
+    </div>
+    <div class="search_box">
+        <label id="kw">关键字：</label>      
+        <input id="keywords" type="text" placeholder="请输入平台名称" value="<?php
+        if (!empty($key)) {
+            echo $key;
+        }
+        ?>" >
+        <input type="button" value="" class="search_ico" />       
     </div>
     <div class="content">
         <ul class="left tbalist">
@@ -157,6 +196,27 @@ $dh_list = db_fetch_arrays($sql, $conn);
 </div>
 <script type="text/javascript">
 
+    var availableTags =<?php echo $json_names; ?>;
+    $("#keywords").autocomplete({
+        source: availableTags
+    });
+
+    $('#keywords').keypress(function (e) {
+        if (e.keyCode === 13) {
+            $(".search_ico").click();
+        }
+    });
+    $(".search_ico").click(function () {
+        var key = $.trim($("#keywords").val());
+        if (key !== "") {
+            window.location.href = "admin_list.php?key=" + key;
+        } else {
+            window.location.href = "admin_list.php";
+        }
+    });
+
+
+
     $(".pingtai").mousemove(function () {
         var id = $(this).attr("id");
         for (var i = 0; i < 6; i++) {
@@ -190,12 +250,12 @@ $dh_list = db_fetch_arrays($sql, $conn);
             modal: true,
             buttons: {
                 "确定": function () {
-                    var newaddress = $("#inaddress").val();                  
+                    var newaddress = $("#inaddress").val();
                     $.ajax({
                         type: "post",
                         url: 'admin_dbdo.php',
                         dataType: "json",
-                         data: {id: strs[0], doing: 'inspect',address:newaddress},
+                        data: {id: strs[0], doing: 'inspect', address: newaddress},
                         success: function (msg) {
                             if (msg === 1) {
                                 alert("操作成功");
@@ -229,12 +289,12 @@ $dh_list = db_fetch_arrays($sql, $conn);
             modal: true,
             buttons: {
                 "确定": function () {
-                    var newaddress = $("#verifyaddress").val();                   
+                    var newaddress = $("#verifyaddress").val();
                     $.ajax({
                         type: "post",
                         url: 'admin_dbdo.php',
                         dataType: "json",
-                         data: {id: strs[0], doing: 'verify',address:newaddress},
+                        data: {id: strs[0], doing: 'verify', address: newaddress},
                         success: function (msg) {
                             if (msg === 1) {
                                 alert("操作成功");
@@ -266,7 +326,7 @@ $dh_list = db_fetch_arrays($sql, $conn);
                         type: "post",
                         url: 'admin_del.php',
                         dataType: "json",
-                        data: {id: data,del: 'list'},
+                        data: {id: data, del: 'list'},
                         success: function (msg) {
                             if (msg === 1) {
                                 alert("删除成功");
