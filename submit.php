@@ -8,7 +8,7 @@ $summary = isset($_REQUEST["summary"]) && !empty($_REQUEST['summary']) ? addslas
 $province = isset($_REQUEST["province"]) && !empty($_REQUEST['province']) ? $_REQUEST['province'] : "";
 $year = isset($_REQUEST["year"]) && !empty($_REQUEST['year']) ? $_REQUEST['year'] : "";
 $addtime = time();
-if (($name != '') && ($url != '') && ($summary != '')) {
+if (($name != '') && ($url != '') && ($province != '')) {
     $sql = "insert into wdzx_navigation_submit(name,url,logo_url,link_qq,summary,province,year,add_time) values('{$name}','{$url}','{$logo_url}','{$link_qq}','{$summary}','{$province}','{$year}', $addtime)";
     $ret = mysql_query($sql, $conn);
     if ($ret)

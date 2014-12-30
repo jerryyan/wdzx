@@ -37,7 +37,7 @@ $subPages = new Page();
 <table align="center" border="1" style="width:1000px;border-collapse:collapse;" cellpadding="3" cellspacing="0" >
     <tr>
         <th>名称</th>
-        <th>网址</th>     
+       
         <th>省份</th>
         <th>问题地址</th>
         <th>操作</th>          
@@ -45,7 +45,7 @@ $subPages = new Page();
 <?php foreach ($dh_list as $v) { ?>
         <tr>
             <td><?php echo $v['name']; ?></td>
-            <td><?php echo $v['url']; ?></td>
+          
             <td><?php echo $v['province']; ?></td>
             <td><?php echo $v['problem']; ?></td>
             <td style="text-align:center;"><a style="cursor:pointer;" class="problem_a" id="<?php echo $v['id'] . "#" . $v['problem']; ?>"><?php echo empty($v['problem']) ? "添加" : "修改"; ?></a></td>
